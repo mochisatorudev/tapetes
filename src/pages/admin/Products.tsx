@@ -87,6 +87,8 @@ export const AdminProducts: React.FC = () => {
         stock_quantity: parseInt(formData.stock_quantity),
         category_id: formData.category_id,
         image_url: formData.image_url,
+        image_url2: formData.image_url2,
+        image_url3: formData.image_url3,
       };
 
       if (editingProduct) {
@@ -133,6 +135,8 @@ export const AdminProducts: React.FC = () => {
       stock_quantity: product.stock_quantity.toString(),
       category_id: product.category_id,
       image_url: product.image_url,
+      image_url2: product.image_url2 || '',
+      image_url3: product.image_url3 || '',
     });
     setShowModal(true);
   };
@@ -454,6 +458,8 @@ export const AdminProducts: React.FC = () => {
                       stock_quantity: '',
                       category_id: '',
                       image_url: '',
+                      image_url2: '',
+                      image_url3: '',
                     });
                   }}
                   className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"

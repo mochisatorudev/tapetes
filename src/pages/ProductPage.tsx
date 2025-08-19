@@ -123,9 +123,9 @@ export const ProductPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-10 px-2 animate-fadein">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/90 rounded-3xl shadow-2xl overflow-hidden border border-blue-100">
         {/* Galeria de Imagens */}
-        <div className="flex flex-row items-center justify-center p-6 gap-6">
+        <div className="flex flex-row items-center justify-center p-6 gap-8">
           {/* Imagem Principal */}
-          <div className="relative w-2/3 aspect-square rounded-2xl overflow-hidden shadow-lg group">
+          <div className="relative w-[72%] aspect-square rounded-2xl overflow-hidden shadow-lg group min-h-[340px] min-w-[240px]">
             <img
               src={mainImage}
               alt={product.name}
@@ -135,7 +135,7 @@ export const ProductPage: React.FC = () => {
             <span className="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">NOVO</span>
           </div>
           {/* Imagens Secundárias */}
-          <div className="flex flex-col w-1/3 h-full gap-4 justify-center">
+          <div className="flex flex-col w-[28%] h-full gap-6 justify-center min-h-[340px] min-w-[120px]">
             {[product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
               <button
                 key={idx}
