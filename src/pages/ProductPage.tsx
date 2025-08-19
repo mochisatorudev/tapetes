@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Star, ShoppingCart, Plus, Minus } from 'lucide-react';
+import { Star, ShoppingCart, Plus, Minus, Search } from 'lucide-react';
 import { supabase, Product, Review, isSupabaseConfigured } from '../lib/supabase';
 import { mockProducts, mockReviews } from '../lib/mockData';
 import { useCart } from '../contexts/CartContext';
 
 export const ProductPage: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -132,6 +133,17 @@ export const ProductPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-8 px-2 animate-fadein">
+      {/* Modal de imagem em tela cheia */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80" onClick={() => setShowModal(false)}>
+          <img
+            src={mainImage}
+            alt={product.name}
+            className="max-w-full max-h-full rounded-2xl shadow-2xl border-4 border-white"
+            style={{objectFit:'contain'}}
+          />
+        </div>
+      )}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/90 rounded-3xl shadow-2xl overflow-hidden border border-blue-100">
         {/* Galeria de Imagens */}
         <div className="flex flex-row items-center justify-center p-4 md:p-8 gap-4 md:gap-8 w-full">
@@ -144,6 +156,15 @@ export const ProductPage: React.FC = () => {
               style={{boxShadow:'0 8px 32px 0 rgba(16,185,129,0.15)'}}
             />
             <span className="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">NOVO</span>
+            {/* Lupa */}
+            <button
+              className="absolute bottom-3 right-3 bg-white/80 hover:bg-white p-1 rounded-full shadow-md border border-gray-200 flex items-center justify-center z-10"
+              style={{width:28, height:28}}
+              onClick={e => { e.stopPropagation(); setShowModal(true); }}
+              aria-label="Ampliar imagem"
+            >
+              <Search className="w-4 h-4 text-gray-700" />
+            </button>
           </div>
           {/* Imagens Secundárias */}
           <div className="flex flex-col w-[30%] max-w-[120px] gap-3 md:gap-6 justify-center min-h-[220px] mx-auto">
