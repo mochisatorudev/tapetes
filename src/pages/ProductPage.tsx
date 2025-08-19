@@ -87,15 +87,18 @@ export const ProductPage: React.FC = () => {
     : 0;
 
 
-  // Estado para imagem principal
+  // Estado para imagens: principal e secundárias
   const [mainImage, setMainImage] = useState<string | undefined>(undefined);
+  const [secondaryImages, setSecondaryImages] = useState<string[]>([]);
 
-  // Só inicializa mainImage quando produto existir
+  // Inicializa imagens ao carregar produto
   useEffect(() => {
-    if (product && product.image_url) {
+    if (product) {
       setMainImage(product.image_url);
+      const secondaries = [product.image_url2, product.image_url3].filter(Boolean) as string[];
+      setSecondaryImages(secondaries);
     }
-  }, [product?.image_url]);
+  }, [product?.image_url, product?.image_url2, product?.image_url3]);
 
   if (loading) {
     return (
@@ -116,33 +119,40 @@ export const ProductPage: React.FC = () => {
     );
   }
 
-  // Galeria de imagens dinâmica
-  const images = [product.image_url, product.image_url2, product.image_url3].filter(Boolean);
+  // Função para trocar imagem principal e secundária
+  const handleSwapImage = (idx: number) => {
+    if (!secondaryImages[idx] || !mainImage) return;
+    const newSecondaries = [...secondaryImages];
+    // Troca
+    const temp = newSecondaries[idx];
+    newSecondaries[idx] = mainImage;
+    setMainImage(temp);
+    setSecondaryImages(newSecondaries);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-10 px-2 animate-fadein">
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/90 rounded-3xl shadow-2xl overflow-hidden border border-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-8 px-2 animate-fadein">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/90 rounded-3xl shadow-2xl overflow-hidden border border-blue-100">
         {/* Galeria de Imagens */}
-        <div className="flex flex-row items-center justify-center p-6 gap-8">
+        <div className="flex flex-row items-center justify-center p-4 md:p-8 gap-4 md:gap-8 w-full">
           {/* Imagem Principal */}
-          <div className="relative w-[72%] aspect-square rounded-2xl overflow-hidden shadow-lg group min-h-[340px] min-w-[240px]">
+          <div className="relative w-[70%] max-w-[380px] aspect-square rounded-2xl overflow-hidden shadow-lg group min-h-[220px] bg-gradient-to-br from-blue-100 to-emerald-100 flex items-center justify-center mx-auto">
             <img
               src={mainImage}
               alt={product.name}
-              className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105 bg-gradient-to-br from-blue-100 to-emerald-100"
+              className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
               style={{boxShadow:'0 8px 32px 0 rgba(16,185,129,0.15)'}}
             />
             <span className="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">NOVO</span>
           </div>
           {/* Imagens Secundárias */}
-          <div className="flex flex-col w-[28%] h-full gap-6 justify-center min-h-[340px] min-w-[120px]">
-            {[product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
+          <div className="flex flex-col w-[30%] max-w-[120px] gap-3 md:gap-6 justify-center min-h-[220px] mx-auto">
+            {secondaryImages.map((img, idx) => (
               <button
                 key={idx}
-                className={`w-full h-1/2 rounded-xl border-2 transition-all duration-300 ${mainImage===img?'border-emerald-500 scale-105 shadow-lg':'border-gray-200 hover:border-blue-400'}`}
-                onClick={()=>setMainImage(img)}
+                className={`w-full aspect-square rounded-xl border-2 transition-all duration-300 ${mainImage===img?'border-emerald-500 scale-105 shadow-lg':'border-gray-200 hover:border-blue-400'}`}
+                onClick={()=>handleSwapImage(idx)}
                 aria-label={`Ver imagem secundária ${idx+1}`}
-                style={{minHeight:'48%', maxHeight:'48%'}}
               >
                 <img src={img} alt={product.name+" thumb"} className="w-full h-full object-cover rounded-xl" />
               </button>
