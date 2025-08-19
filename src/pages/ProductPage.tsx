@@ -153,7 +153,7 @@ export const ProductPage: React.FC = () => {
         {/* Detalhes do Produto */}
         <div className="flex flex-col justify-between p-8 gap-8">
           <div>
-            <h1 className="text-4xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">{product.name}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein max-w-xl w-[90%]">{product.name}</h1>
             <div className="flex items-center gap-4 mb-6">
               <span className="text-3xl font-bold text-emerald-600 animate-pop">R$ {Number(product.price).toFixed(2)}</span>
               <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold animate-fadein delay-200">{product.stock_quantity} disponíveis</span>
