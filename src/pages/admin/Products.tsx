@@ -16,6 +16,8 @@ export const AdminProducts: React.FC = () => {
     stock_quantity: '',
     category_id: '',
     image_url: '',
+    image_url2: '',
+    image_url3: '',
   });
 
   useEffect(() => {
@@ -372,9 +374,7 @@ export const AdminProducts: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  URL da Imagem
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">URL da Imagem Principal</label>
                 <input
                   type="url"
                   value={formData.image_url}
@@ -388,6 +388,50 @@ export const AdminProducts: React.FC = () => {
                     <img
                       src={formData.image_url}
                       alt="Preview"
+                      className="w-32 h-32 object-cover rounded-lg border"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">URL da Imagem Secundária 1</label>
+                <input
+                  type="url"
+                  value={formData.image_url2}
+                  onChange={(e) => setFormData({ ...formData, image_url2: e.target.value })}
+                  placeholder="https://exemplo.com/imagem2.jpg"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                {formData.image_url2 && (
+                  <div className="mt-2">
+                    <img
+                      src={formData.image_url2}
+                      alt="Preview 2"
+                      className="w-32 h-32 object-cover rounded-lg border"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">URL da Imagem Secundária 2</label>
+                <input
+                  type="url"
+                  value={formData.image_url3}
+                  onChange={(e) => setFormData({ ...formData, image_url3: e.target.value })}
+                  placeholder="https://exemplo.com/imagem3.jpg"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                {formData.image_url3 && (
+                  <div className="mt-2">
+                    <img
+                      src={formData.image_url3}
+                      alt="Preview 3"
                       className="w-32 h-32 object-cover rounded-lg border"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';

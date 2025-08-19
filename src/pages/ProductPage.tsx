@@ -115,28 +115,25 @@ export const ProductPage: React.FC = () => {
               {/* Imagem Principal */}
               <div className="w-full sm:flex-1 aspect-square">
                 <img
-                  src={product.image_url}
+                  src={mainImage}
                   alt={product.name}
-                  className="w-full h-full object-contain rounded-lg bg-gray-50"
+                  className="w-full h-full object-contain rounded-lg bg-gray-50 border border-gray-200"
                 />
               </div>
-              
               {/* Imagens Secundárias */}
               <div className="flex sm:flex-col gap-2 sm:w-32">
-                <div className="flex-1 sm:flex-none aspect-square sm:h-[calc(50%-4px)]">
-                  <img
-                    src={product.image_url}
-                    alt={`${product.name} - Vista 2`}
-                    className="w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity bg-gray-50"
-                  />
-                </div>
-                <div className="flex-1 sm:flex-none aspect-square sm:h-[calc(50%-4px)]">
-                  <img
-                    src={product.image_url}
-                    alt={`${product.name} - Vista 3`}
-                    className="w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity bg-gray-50"
-                  />
-                </div>
+                {[product.image_url, product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
+                  img && (
+                    <div key={idx} className="flex-1 sm:flex-none aspect-square sm:h-[calc(50%-4px)]">
+                      <img
+                        src={img}
+                        alt={`${product.name} - Vista ${idx+1}`}
+                        className="w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity bg-gray-50 border border-gray-200"
+                        onClick={() => setMainImage(img)}
+                      />
+                    </div>
+                  )
+                ))}
               </div>
             </div>
 
@@ -144,40 +141,39 @@ export const ProductPage: React.FC = () => {
             <div className="space-y-4 sm:space-y-6">
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                  {product.name}
-                </h1>
-                
-                <div className="flex items-center space-x-2 mb-3 sm:mb-4">
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        className={`h-4 w-4 sm:h-5 sm:w-5 ${
-                          star <= averageRating
-                            ? 'fill-yellow-400 text-yellow-400'
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm sm:text-base text-gray-600">
-                    {averageRating.toFixed(1)} ({reviews.length} avaliações)
-                  </span>
-                </div>
+                  const [mainImage, setMainImage] = useState(product.image_url);
 
-                <p className="product-price text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4">
-                  R$ {product.price.toFixed(2).replace('.', ',')}
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-2 text-sm sm:text-base">
-                <span className="text-green-600">✓ Em estoque</span>
-                <span className="text-gray-500">({product.stock_quantity} unidades)</span>
-              </div>
-
-              {/* Controle de Quantidade */}
-              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                <span className="text-gray-700 font-medium text-sm sm:text-base">Quantidade:</span>
+                  return (
+                    <>
+                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6">
+                            {/* Galeria de Imagens do Produto */}
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                              {/* Imagem Principal */}
+                              <div className="w-full sm:flex-1 aspect-square">
+                                <img
+                                  src={mainImage}
+                                  alt={product.name}
+                                  className="w-full h-full object-contain rounded-lg bg-gray-50 border border-gray-200"
+                                />
+                              </div>
+                              {/* Imagens Secundárias */}
+                              <div className="flex sm:flex-col gap-2 sm:w-32">
+                                {[product.image_url, product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
+                                  img && (
+                                    <div key={idx} className="flex-1 sm:flex-none aspect-square sm:h-[calc(50%-4px)]">
+                                      <img
+                                        src={img}
+                                        alt={`${product.name} - Vista ${idx+1}`}
+                                        className="w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity bg-gray-50 border border-gray-200"
+                                        onClick={() => setMainImage(img)}
+                                      />
+                                    </div>
+                                  )
+                                ))}
+                              </div>
+                            </div>
                 <div className="flex items-center border rounded-lg">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}

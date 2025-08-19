@@ -59,6 +59,8 @@ export interface Product {
   stock_quantity: number;
   category_id: string;
   image_url: string;
+  image_url2?: string;
+  image_url3?: string;
   created_at: string;
   category?: Category;
 }
