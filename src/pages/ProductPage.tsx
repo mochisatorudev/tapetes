@@ -135,7 +135,7 @@ export const ProductPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-8 px-2 animate-fadein">
       {/* Modal de imagem em tela cheia */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80" onClick={() => setShowModal(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4 md:p-12" onClick={() => setShowModal(false)}>
           <img
             src={mainImage}
             alt={product.name}
