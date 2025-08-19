@@ -86,6 +86,17 @@ export const ProductPage: React.FC = () => {
     ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length 
     : 0;
 
+
+  // Estado para imagem principal
+  const [mainImage, setMainImage] = useState<string | undefined>(undefined);
+
+  // Só inicializa mainImage quando produto existir
+  useEffect(() => {
+    if (product && product.image_url) {
+      setMainImage(product.image_url);
+    }
+  }, [product?.image_url]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -104,16 +115,6 @@ export const ProductPage: React.FC = () => {
       </div>
     );
   }
-
-  // Estado para imagem principal
-  const [mainImage, setMainImage] = useState<string | undefined>(undefined);
-
-  // Só inicializa mainImage quando produto existir
-  useEffect(() => {
-    if (product && product.image_url) {
-      setMainImage(product.image_url);
-    }
-  }, [product?.image_url]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
