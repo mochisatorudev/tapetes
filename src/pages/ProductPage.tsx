@@ -108,10 +108,12 @@ export const ProductPage: React.FC = () => {
   // Estado para imagem principal
   const [mainImage, setMainImage] = useState<string | undefined>(undefined);
 
-  // Atualiza mainImage quando o produto é carregado
+  // Só inicializa mainImage quando produto existir
   useEffect(() => {
-    if (product?.image_url) setMainImage(product.image_url);
-  }, [product]);
+    if (product && product.image_url) {
+      setMainImage(product.image_url);
+    }
+  }, [product?.image_url]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
