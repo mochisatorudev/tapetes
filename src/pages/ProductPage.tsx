@@ -123,8 +123,9 @@ export const ProductPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-10 px-2 animate-fadein">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/90 rounded-3xl shadow-2xl overflow-hidden border border-blue-100">
         {/* Galeria de Imagens */}
-        <div className="flex flex-col items-center justify-center p-6 gap-6">
-          <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg group">
+        <div className="flex flex-row items-center justify-center p-6 gap-6">
+          {/* Imagem Principal */}
+          <div className="relative w-2/3 aspect-square rounded-2xl overflow-hidden shadow-lg group">
             <img
               src={mainImage}
               alt={product.name}
@@ -133,13 +134,15 @@ export const ProductPage: React.FC = () => {
             />
             <span className="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">NOVO</span>
           </div>
-          <div className="flex gap-3 w-full justify-center">
-            {images.map((img, idx) => (
+          {/* Imagens Secundárias */}
+          <div className="flex flex-col w-1/3 h-full gap-4 justify-center">
+            {[product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
               <button
                 key={idx}
-                className={`w-16 h-16 rounded-xl border-2 transition-all duration-300 ${mainImage===img?'border-emerald-500 scale-110 shadow-lg':'border-gray-200 hover:border-blue-400'}`}
+                className={`w-full h-1/2 rounded-xl border-2 transition-all duration-300 ${mainImage===img?'border-emerald-500 scale-105 shadow-lg':'border-gray-200 hover:border-blue-400'}`}
                 onClick={()=>setMainImage(img)}
-                aria-label={`Ver imagem ${idx+1}`}
+                aria-label={`Ver imagem secundária ${idx+1}`}
+                style={{minHeight:'48%', maxHeight:'48%'}}
               >
                 <img src={img} alt={product.name+" thumb"} className="w-full h-full object-cover rounded-xl" />
               </button>
@@ -151,7 +154,6 @@ export const ProductPage: React.FC = () => {
         <div className="flex flex-col justify-between p-8 gap-8">
           <div>
             <h1 className="text-4xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">{product.name}</h1>
-            <p className="text-lg text-gray-600 mb-4 animate-fadein delay-100">{product.description}</p>
             <div className="flex items-center gap-4 mb-6">
               <span className="text-3xl font-bold text-emerald-600 animate-pop">R$ {Number(product.price).toFixed(2)}</span>
               <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold animate-fadein delay-200">{product.stock_quantity} disponíveis</span>
@@ -190,6 +192,13 @@ export const ProductPage: React.FC = () => {
                 <ShoppingCart className="h-6 w-6" />
                 Adicionar ao Carrinho
               </button>
+            </div>
+            {/* Descrição abaixo dos botões */}
+            <div className="border-t pt-6 mt-8">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-3">Descrição do Produto</h3>
+              <p className="product-description leading-relaxed text-sm sm:text-base">
+                {product.description}
+              </p>
             </div>
           </div>
           <div className="flex flex-col gap-2 mt-6">
