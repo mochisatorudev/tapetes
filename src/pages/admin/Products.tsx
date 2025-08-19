@@ -37,7 +37,7 @@ export const AdminProducts: React.FC = () => {
       const { data, error } = await supabase!
         .from('products')
         .select(`
-          *,
+          id, name, description, price, stock_quantity, category_id, image_url, image_url2, image_url3, created_at,
           category:categories(*)
         `)
         .order('created_at', { ascending: false });
