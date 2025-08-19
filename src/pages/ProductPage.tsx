@@ -174,6 +174,10 @@ export const ProductPage: React.FC = () => {
                                 ))}
                               </div>
                             </div>
+                              <div className="space-y-4 sm:space-y-6">
+                                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                                  {product.name}
+                                </h1>
                 <div className="flex items-center border rounded-lg">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
