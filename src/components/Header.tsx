@@ -26,13 +26,13 @@ export function Header() {
   return (
     <>
       {/* Banner dinâmico da loja */}
-      <div className="w-full m-0 p-0" style={{margin:0,padding:0}}>
+  <div className="w-full m-0 p-0" style={{margin:0,padding:0,marginBottom:0,paddingBottom:0}}>
         {!bannerLoaded && (
           <div className="w-full flex items-center justify-center bg-gray-100 animate-pulse" style={{height:80,minHeight:80}}>
             <span className="text-xs text-gray-400">Carregando banner...</span>
           </div>
         )}
-        <div className="w-full overflow-hidden m-0 p-0">
+  <div className="w-full overflow-hidden m-0 p-0" style={{marginBottom:0,paddingBottom:0}}>
           <img
             src={bannerUrl}
             alt="Banner da loja"
