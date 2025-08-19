@@ -57,7 +57,7 @@ export function Header() {
           />
         </div>
       </div>
-      <header className="bg-white shadow-md sticky top-0 z-40 m-0 pt-4 pb-4" style={{margin:0,paddingTop:'1rem',paddingBottom:'1rem'}}>
+  <header className="bg-white shadow-md sticky top-0 z-40 m-0 pt-2 pb-2" style={{margin:0,paddingTop:'0.5rem',paddingBottom:'0.5rem'}}>
         <div className="container mx-auto px-0 py-4 flex justify-between items-center m-0" style={{margin:0}}>
           {/* Logo da loja */}
           <Link to="/" className="flex items-center">
