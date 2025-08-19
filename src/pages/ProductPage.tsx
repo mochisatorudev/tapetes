@@ -116,130 +116,119 @@ export const ProductPage: React.FC = () => {
     );
   }
 
+  // Galeria de imagens dinâmica
+  const images = [product.image_url, product.image_url2, product.image_url3].filter(Boolean);
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6">
-            {/* Galeria de Imagens do Produto */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              {/* Imagem Principal */}
-              <div className="w-full sm:flex-1 aspect-square">
-                <img
-                  src={mainImage}
-                  alt={product.name}
-                  className="w-full h-full object-contain rounded-lg bg-gray-50 border border-gray-200"
-                />
-              </div>
-              {/* Imagens Secundárias */}
-              <div className="flex sm:flex-col gap-2 sm:w-32">
-                {[product.image_url, product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
-                  img && (
-                    <div key={idx} className="flex-1 sm:flex-none aspect-square sm:h-[calc(50%-4px)]">
-                      <img
-                        src={img}
-                        alt={`${product.name} - Vista ${idx+1}`}
-                        className="w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity bg-gray-50 border border-gray-200"
-                        onClick={() => setMainImage(img)}
-                      />
-                    </div>
-                  )
-                ))}
-              </div>
-            </div>
-
-            {/* Detalhes do Produto */}
-            <div className="space-y-4 sm:space-y-6">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                {product.name}
-              </h1>
-              <div className="flex items-center border rounded-lg">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 sm:p-3 hover:bg-gray-100 transition-colors"
-                >
-                  <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
-                </button>
-                <span className="px-3 sm:px-4 py-2 font-semibold text-sm sm:text-base">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
-                  className="p-2 sm:p-3 hover:bg-gray-100 transition-colors"
-                >
-                  <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
-                </button>
-              </div>
-
-              {/* Botões */}
-              <div className="space-y-2 sm:space-y-3">
-                <button
-                  onClick={() => {
-                    addToCart(product);
-                    navigate('/checkout');
-                  }}
-                  className="w-full bg-green-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base"
-                >
-                  Comprar Agora
-                </button>
-
-                <button
-                  onClick={handleAddToCart}
-                  className="w-full bg-blue-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
-                >
-                  <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span>Adicionar ao Carrinho</span>
-                </button>
-              </div>
-
-              {/* Descrição do Produto */}
-              <div className="border-t pt-4 sm:pt-6">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-3">Descrição do Produto</h3>
-                <p className="product-description leading-relaxed text-sm sm:text-base">
-                  {product.description}
-                </p>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-10 px-2 animate-fadein">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/90 rounded-3xl shadow-2xl overflow-hidden border border-blue-100">
+        {/* Galeria de Imagens */}
+        <div className="flex flex-col items-center justify-center p-6 gap-6">
+          <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg group">
+            <img
+              src={mainImage}
+              alt={product.name}
+              className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105 bg-gradient-to-br from-blue-100 to-emerald-100"
+              style={{boxShadow:'0 8px 32px 0 rgba(16,185,129,0.15)'}}
+            />
+            <span className="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">NOVO</span>
           </div>
-
-          {/* Avaliações */}
-          <div className="border-t p-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Avaliações dos Clientes
-            </h3>
-            {reviews.length === 0 ? (
-              <p className="text-gray-500">Nenhuma avaliação ainda.</p>
-            ) : (
-              <div className="space-y-4">
-                {reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-50 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-gray-900">
-                        {review.customer_name}
-                      </h4>
-                      <div className="flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
-                            key={star}
-                            className={`h-4 w-4 ${
-                              star <= review.rating
-                                ? 'fill-yellow-400 text-yellow-400'
-                                : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    {review.comment && (
-                      <p className="text-gray-600">{review.comment}</p>
-                    )}
-                    <p className="text-sm text-gray-500 mt-2">
-                      {new Date(review.created_at).toLocaleDateString('pt-BR')}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="flex gap-3 w-full justify-center">
+            {images.map((img, idx) => (
+              <button
+                key={idx}
+                className={`w-16 h-16 rounded-xl border-2 transition-all duration-300 ${mainImage===img?'border-emerald-500 scale-110 shadow-lg':'border-gray-200 hover:border-blue-400'}`}
+                onClick={()=>setMainImage(img)}
+                aria-label={`Ver imagem ${idx+1}`}
+              >
+                <img src={img} alt={product.name+" thumb"} className="w-full h-full object-cover rounded-xl" />
+              </button>
+            ))}
           </div>
         </div>
+
+        {/* Detalhes do Produto */}
+        <div className="flex flex-col justify-between p-8 gap-8">
+          <div>
+            <h1 className="text-4xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">{product.name}</h1>
+            <p className="text-lg text-gray-600 mb-4 animate-fadein delay-100">{product.description}</p>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-3xl font-bold text-emerald-600 animate-pop">R$ {Number(product.price).toFixed(2)}</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold animate-fadein delay-200">{product.stock_quantity} disponíveis</span>
+            </div>
+            <div className="flex items-center gap-3 mb-6">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="bg-blue-100 text-blue-700 rounded-full w-9 h-9 flex items-center justify-center text-xl font-bold hover:bg-blue-200 transition-all"
+                aria-label="Diminuir quantidade"
+              >
+                <Minus />
+              </button>
+              <span className="text-xl font-semibold w-10 text-center">{quantity}</span>
+              <button
+                onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
+                className="bg-blue-100 text-blue-700 rounded-full w-9 h-9 flex items-center justify-center text-xl font-bold hover:bg-blue-200 transition-all"
+                aria-label="Aumentar quantidade"
+              >
+                <Plus />
+              </button>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+              <button
+                onClick={() => {
+                  addToCart(product);
+                  navigate('/checkout');
+                }}
+                className="btn-primary w-full py-3 text-lg rounded-xl shadow-md bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-blue-500 hover:to-emerald-500 text-white font-bold tracking-wide transform hover:scale-105 transition-all duration-300 animate-pop"
+              >
+                Comprar Agora
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="btn-secondary w-full py-3 text-lg rounded-xl shadow-md bg-white border-2 border-emerald-400 text-emerald-700 font-bold tracking-wide hover:bg-emerald-50 hover:border-blue-400 transform hover:scale-105 transition-all duration-300 animate-pop flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="h-6 w-6" />
+                Adicionar ao Carrinho
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 mt-6">
+            <span className="text-sm text-gray-400">Categoria: <span className="text-blue-700 font-semibold">{product.category?.name}</span></span>
+            <span className="text-sm text-gray-400">ID: {product.id}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Avaliações */}
+      <div className="max-w-3xl mx-auto mt-12 bg-white/90 rounded-2xl shadow-xl p-8 border border-blue-100 animate-fadein">
+        <h3 className="text-2xl font-bold text-blue-900 mb-6 flex items-center gap-2">
+          <Star className="h-7 w-7 text-amber-400 animate-pop" /> Avaliações dos Clientes
+        </h3>
+        {reviews.length === 0 ? (
+          <p className="text-gray-500">Nenhuma avaliação ainda.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {reviews.map((review) => (
+              <div key={review.id} className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-xl p-5 shadow-md border border-blue-100 animate-fadein">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-semibold text-blue-900">{review.customer_name}</span>
+                  <span className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`h-4 w-4 ${star <= review.rating ? 'text-amber-400' : 'text-gray-300'}`}
+                      />
+                    ))}
+                  </span>
+                </div>
+                {review.comment && (
+                  <p className="text-gray-700 italic">{review.comment}</p>
+                )}
+                <p className="text-xs text-gray-400 mt-2">{new Date(review.created_at).toLocaleDateString('pt-BR')}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
