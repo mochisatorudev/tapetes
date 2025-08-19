@@ -32,27 +32,28 @@ export function Header() {
             <span className="text-xs text-gray-400">Carregando banner...</span>
           </div>
         )}
-        <div style={{width:'100vw',overflow:'hidden',margin:0,padding:0}}>
+        <div className="w-full overflow-hidden m-0 p-0">
           <img
             src={bannerUrl}
             alt="Banner da loja"
-            className="block w-full m-0 p-0 border-0"
+            className="block w-full m-0 p-0 border-0 object-contain md:object-cover"
             style={{
-              width:'100vw',
+              width: '100%',
+              maxWidth: '100vw',
               minHeight: 50,
               maxHeight: 120,
               height: 'auto',
-              margin:0,
-              padding:0,
-              objectFit:'cover',
-              objectPosition:'top',
-              background:'#fff',
-              display:'block',
-              border:'none',
-              boxShadow:'none',
+              margin: 0,
+              padding: 0,
+              objectFit: 'contain',
+              objectPosition: 'top',
+              background: '#fff',
+              display: 'block',
+              border: 'none',
+              boxShadow: 'none',
             }}
-            onLoad={()=>setBannerLoaded(true)}
-            onError={()=>setBannerLoaded(true)}
+            onLoad={() => setBannerLoaded(true)}
+            onError={() => setBannerLoaded(true)}
             draggable={false}
           />
         </div>
@@ -71,10 +72,10 @@ export function Header() {
             {/* <span className="text-2xl font-bold text-gray-800">Sua Loja</span> */}
           </Link>
           <nav className="flex items-center space-x-6">
-            <Link to="/cart" className="relative">
-              <ShoppingCart className="text-gray-600 hover:text-blue-600" />
+            <Link to="/cart" className="relative flex items-center justify-center h-10 w-10">
+              <ShoppingCart className="text-gray-600 hover:text-blue-600 h-6 w-6" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-2 -right-3 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}
