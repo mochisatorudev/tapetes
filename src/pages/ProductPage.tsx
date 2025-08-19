@@ -105,6 +105,9 @@ export const ProductPage: React.FC = () => {
     );
   }
 
+  // Estado para imagem principal
+  const [mainImage, setMainImage] = useState(product.image_url);
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,60 +142,23 @@ export const ProductPage: React.FC = () => {
 
             {/* Detalhes do Produto */}
             <div className="space-y-4 sm:space-y-6">
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                  const [mainImage, setMainImage] = useState(product.image_url);
-
-                  return (
-                    <>
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6">
-                            {/* Galeria de Imagens do Produto */}
-                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                              {/* Imagem Principal */}
-                              <div className="w-full sm:flex-1 aspect-square">
-                                <img
-                                  src={mainImage}
-                                  alt={product.name}
-                                  className="w-full h-full object-contain rounded-lg bg-gray-50 border border-gray-200"
-                                />
-                              </div>
-                              {/* Imagens Secundárias */}
-                              <div className="flex sm:flex-col gap-2 sm:w-32">
-                                {[product.image_url, product.image_url2, product.image_url3].filter(Boolean).map((img, idx) => (
-                                  img && (
-                                    <div key={idx} className="flex-1 sm:flex-none aspect-square sm:h-[calc(50%-4px)]">
-                                      <img
-                                        src={img}
-                                        alt={`${product.name} - Vista ${idx+1}`}
-                                        className="w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity bg-gray-50 border border-gray-200"
-                                        onClick={() => setMainImage(img)}
-                                      />
-                                    </div>
-                                  )
-                                ))}
-                              </div>
-                            </div>
-                              <div className="space-y-4 sm:space-y-6">
-                                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                                  {product.name}
-                                </h1>
-                <div className="flex items-center border rounded-lg">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-2 sm:p-3 hover:bg-gray-100 transition-colors"
-                  >
-                    <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
-                  </button>
-                  <span className="px-3 sm:px-4 py-2 font-semibold text-sm sm:text-base">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
-                    className="p-2 sm:p-3 hover:bg-gray-100 transition-colors"
-                  >
-                    <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
-                  </button>
-                </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                {product.name}
+              </h1>
+              <div className="flex items-center border rounded-lg">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="p-2 sm:p-3 hover:bg-gray-100 transition-colors"
+                >
+                  <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                </button>
+                <span className="px-3 sm:px-4 py-2 font-semibold text-sm sm:text-base">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
+                  className="p-2 sm:p-3 hover:bg-gray-100 transition-colors"
+                >
+                  <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                </button>
               </div>
 
               {/* Botões */}
@@ -231,7 +197,6 @@ export const ProductPage: React.FC = () => {
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
               Avaliações dos Clientes
             </h3>
-            
             {reviews.length === 0 ? (
               <p className="text-gray-500">Nenhuma avaliação ainda.</p>
             ) : (
