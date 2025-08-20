@@ -166,16 +166,9 @@ export function Checkout() {
         {/* Bloco: Dados Pessoais + Endereço */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="bg-white/90 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-4 animate-fadein">
-            <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2">
-              <User className="text-blue-400" />Dados
-            </h2>
+            {/* Título único já está acima, não precisa duplicar */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Dados pessoais */}
-              <div className="col-span-2">
-                <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2">
-                  <User className="text-blue-400" />Dados
-                </h2>
-              </div>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input type="text" placeholder="Nome Completo" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
