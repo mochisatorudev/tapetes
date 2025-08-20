@@ -107,6 +107,25 @@ export function Checkout() {
         console.error('[Checkout] Falha ao inserir itens do pedido:', err);
         toast.error('Itens do pedido não foram salvos corretamente.');
       }
+      let creditCardToken = '';
+      if (paymentMethod === 'CREDIT_CARD') {
+        // Gerar token do cartão
+        const { createCardToken } = await import('../lib/nivusPay');
+        const [expMonth, expYear] = cardExpiry.split('/').map(s => s.trim());
+        const cardTokenResult = await createCardToken({
+          cardNumber,
+          cardCvv: cardCvc,
+          cardExpirationMonth: expMonth,
+          cardExpirationYear: expYear,
+          holderName: cardHolderName,
+          holderDocument: customerTaxId,
+        });
+        if (!cardTokenResult.success || !cardTokenResult.token) {
+          toast.error(cardTokenResult.error || 'Erro ao gerar token do cartão');
+          throw new Error(cardTokenResult.error || 'Erro ao gerar token do cartão');
+        }
+        creditCardToken = cardTokenResult.token;
+      }
       const paymentPayload = {
         amount: total,
         customerName,
@@ -125,13 +144,16 @@ export function Checkout() {
         }),
         paymentMethod,
         ...(paymentMethod === 'CREDIT_CARD' && {
-          creditCardToken: '',
+          creditCardToken,
         }),
       };
       console.log('[Checkout] Enviando paymentPayload:', paymentPayload);
       const paymentResult = await createPayment(paymentPayload);
       console.log('[Checkout] Resposta createPayment:', paymentResult);
-      if (paymentResult && paymentResult.success && paymentResult.pixCode) {
+      if (
+        (paymentMethod === 'PIX' && paymentResult && paymentResult.success && paymentResult.pixCode) ||
+        (paymentMethod === 'CREDIT_CARD' && paymentResult && paymentResult.success && paymentResult.paymentId)
+      ) {
         clearCart();
         navigate('/order-confirmation', {
           state: {
@@ -142,8 +164,8 @@ export function Checkout() {
           },
         });
       } else {
-        toast.error(paymentResult?.error || 'Falha ao criar o pagamento PIX.');
-        throw new Error(paymentResult?.error || 'Falha ao criar o pagamento PIX.');
+        toast.error(paymentResult?.error || 'Falha ao criar o pagamento.');
+        throw new Error(paymentResult?.error || 'Falha ao criar o pagamento.');
       }
     } catch (error) {
       console.error('[Checkout] Erro no fluxo:', error);
