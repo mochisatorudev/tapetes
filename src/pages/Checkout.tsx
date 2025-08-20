@@ -13,13 +13,16 @@ export function Checkout() {
   const { items, clearCart, total } = useCart();
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
   const [customerTaxId, setCustomerTaxId] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('PIX');
   const [cardHolderName, setCardHolderName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvc, setCardCvc] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [step, setStep] = useState(0); // 0: Dados, 1: Endereço, 2: Pagamento, 3: Resumo
   const navigate = useNavigate();
 
   if (!items || items.length === 0) {
