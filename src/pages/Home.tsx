@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Store, Phone, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Store, Phone, Mail, ChevronLeft, ChevronRight, ShieldCheck, Truck, Gift } from 'lucide-react';
 import { supabase, Product, Category, isSupabaseConfigured, getSupabaseStatus } from '../lib/supabase';
 import { mockProducts, mockCategories } from '../lib/mockData';
 import { ProductCard } from '../components/ProductCard';
@@ -103,36 +104,49 @@ export const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section 
-        className="text-white py-8 sm:py-12 md:py-20 hero-banner"
+
+      {/* HERO NOVO */}
+      <section
+        className="relative text-white py-16 sm:py-24 md:py-32 flex items-center justify-center overflow-hidden"
         style={{
-          background: settings?.banner_url 
-            ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${settings.banner_url})`
-            : `linear-gradient(to right, ${settings?.primary_color || '#3b82f6'}, ${settings?.secondary_color || '#10b981'})`,
-          backgroundPosition: 'center center',
+          background: settings?.banner_url
+            ? `linear-gradient(120deg,rgba(0,0,0,0.7) 60%,rgba(0,0,0,0.3)), url(${settings.banner_url})`
+            : `linear-gradient(120deg, ${settings?.primary_color || '#3b82f6'} 60%, ${settings?.secondary_color || '#10b981'})`,
+          backgroundPosition: 'center',
           backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 hero-content">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
+        <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-transparent pointer-events-none animate-fadein" />
+        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center animate-fadein">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg tracking-tight">
             {settings?.welcome_message || `Bem-vindo à ${settings?.store_name}`}
           </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-6 opacity-90 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl mb-6 opacity-90 max-w-2xl mx-auto leading-relaxed">
             {settings?.store_description}
           </p>
           {settings?.store_slogan && (
-            <p className="text-sm sm:text-base mb-4 sm:mb-6 opacity-80 italic max-w-3xl mx-auto">
-              "{settings.store_slogan}"
-            </p>
+            <p className="text-base sm:text-lg mb-6 opacity-80 italic max-w-2xl mx-auto">"{settings.store_slogan}"</p>
           )}
-          <Link 
+          <Link
             to="/products"
-            className="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
+            className="inline-block bg-white text-lg font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 hover:bg-gray-100 transition-all duration-300"
             style={{ color: settings?.primary_color || '#3b82f6' }}
           >
             Ver Produtos
           </Link>
+        </div>
+        {/* Animação de formas/flutuantes */}
+        <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-pulse delay-200" />
+      </section>
+
+      {/* Benefícios rápidos */}
+      <section className="bg-white py-6 shadow-sm">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-6 px-4">
+          <div className="flex items-center gap-3 text-emerald-600 font-semibold text-base"><ShieldCheck className="w-6 h-6" /> Compra 100% Segura</div>
+          <div className="flex items-center gap-3 text-blue-600 font-semibold text-base"><Truck className="w-6 h-6" /> Entrega Rápida</div>
+          <div className="flex items-center gap-3 text-pink-600 font-semibold text-base"><Gift className="w-6 h-6" /> Brindes Exclusivos</div>
         </div>
       </section>
 
@@ -171,93 +185,95 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Products Section */}
-      <section className="py-12">
+
+      {/* Carrossel de Produtos Inovador */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Produtos em Destaque
-          </h2>
-          
+          <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight animate-fadein">Descubra nossos destaques</h2>
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500">Nenhum produto em destaque.</p>
             </div>
           ) : (
-            <>
-              {/* Primeira linha - 4 produtos */}
-              <div className="product-section mb-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-gray-800">Mais Vendidos</h3>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => scrollContainer('products-line-1', 'left')}
-                      className="scroll-button"
-                      style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => scrollContainer('products-line-1', 'right')}
-                      className="scroll-button"
-                      style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-                <div id="products-line-1" className="product-line">
-                  {filteredProducts.slice(0, 6).map((product) => (
-                    <div key={product.id} className="product-card-wrapper">
-                      <ProductCard product={product} />
-                    </div>
-                  ))}
+            <div className="relative">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-2xl font-bold text-gray-800">Mais Vendidos</h3>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => scrollContainer('products-carousel', 'left')}
+                    className="scroll-button"
+                    style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => scrollContainer('products-carousel', 'right')}
+                    className="scroll-button"
+                    style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
                 </div>
               </div>
-
-              {/* Segunda linha - 3 produtos */}
-              {filteredProducts.length > 4 && (
-                <div className="product-section">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-gray-800">Novidades</h3>
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => scrollContainer('products-line-2', 'left')}
-                        className="scroll-button"
-                        style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => scrollContainer('products-line-2', 'right')}
-                        className="scroll-button"
-                        style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
+              <div id="products-carousel" className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+                {filteredProducts.slice(0, 12).map((product, idx) => (
+                  <div
+                    key={product.id}
+                    className="relative min-w-[260px] max-w-xs bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center justify-between transition-transform duration-300 hover:scale-105 group snap-center"
+                  >
+                    {idx < 3 && (
+                      <span className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
+                    )}
+                    <ProductCard product={product} />
                   </div>
-                  <div id="products-line-2" className="product-line">
-                    {filteredProducts.slice(4, 10).map((product) => (
-                      <div key={product.id} className="product-card-wrapper">
-                        <ProductCard product={product} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <Link
+                  to="/products"
+                  className="text-white px-8 py-3 rounded-full font-bold shadow-lg transition-colors inline-block hover:scale-105"
+                  style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
+                >
+                  Ver Todos os Produtos
+                </Link>
+              </div>
+            </div>
           )}
-          
-          <div className="text-center mt-8">
-            <Link
-              to="/products"
-              className="text-white px-8 py-3 rounded-lg transition-colors inline-block"
-              style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-            >
-              Ver Todos os Produtos
-            </Link>
+        </div>
+      </section>
+
+      {/* Banner extra */}
+      <section className="py-10 bg-gradient-to-r from-emerald-50 to-blue-50">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-4 animate-fadein">
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="text-2xl font-bold mb-2 text-emerald-700">Compre com tranquilidade</h3>
+            <p className="text-lg text-gray-700 mb-4">Produtos selecionados, entrega rápida e suporte humanizado. Sua experiência é prioridade!</p>
+            <Link to="/faq" className="inline-block bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-emerald-700 transition">Dúvidas? Veja o FAQ</Link>
+          </div>
+          <img src="/banner.jpg" alt="Banner" className="w-64 h-40 object-cover rounded-xl shadow-lg border border-emerald-100" />
+        </div>
+      </section>
+
+      {/* Depoimentos */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">O que nossos clientes dizem</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center animate-fadein">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“Amei a qualidade e a entrega foi super rápida! Recomendo demais.”</p>
+              <span className="text-emerald-600 font-bold">Juliana S.</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center animate-fadein delay-100">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“Atendimento excelente e produtos lindos. Voltarei a comprar!”</p>
+              <span className="text-blue-600 font-bold">Carlos M.</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center animate-fadein delay-200">
+              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“O site é fácil de navegar e o capacho ficou perfeito na minha porta!”</p>
+              <span className="text-pink-600 font-bold">Renata F.</span>
+            </div>
           </div>
         </div>
       </section>
