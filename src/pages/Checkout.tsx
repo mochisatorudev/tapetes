@@ -1,31 +1,28 @@
 // filepath: src/pages/Checkout.tsx
-import { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../contexts/CartContext';
-import { createOrder } from '../lib/supabase';
-import { createPayment } from '../lib/nivusPay';
-import { toast } from 'sonner';
-import { CreditCard, QrCode, User, Mail, FileText, ShoppingCart, ArrowRight, Loader2 } from 'lucide-react';
 
-type PaymentMethod = 'pix' | 'credit_card';
 
-export function Checkout() {
-  const { cart, clearCart, total } = useCart();
+type PaymentMethod = 'PIX' | 'CREDIT_CARD';
+
+  const { items, clearCart, total } = useCart();
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerTaxId, setCustomerTaxId] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('pix');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('PIX');
   const [cardHolderName, setCardHolderName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvc, setCardCvc] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
+
+  // Corrigir tela branca: garantir hooks no topo e checagem de dados
+  if (!items || items.length === 0) {
+    return <div className="min-h-screen flex items-center justify-center text-gray-500 text-lg">Seu carrinho está vazio.</div>;
+  }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (cart.length === 0) {
+    if (items.length === 0) {
       toast.error('Seu carrinho está vazio.');
       return;
     }
@@ -40,15 +37,14 @@ export function Checkout() {
         return;
       }
     }
- 
     setIsLoading(true);
-
     try {
+      // Corrigir nomes das propriedades para o backend
       const order = await createOrder({
-        customerName,
-        customerEmail,
-        customerTaxId,
-        items: cart,
+        customer_name: customerName,
+        customer_email: customerEmail,
+        cpf: customerTaxId,
+        items,
         status: 'pending',
       });
 
@@ -56,14 +52,14 @@ export function Checkout() {
 
       const paymentResult = await createPayment({
         customer: { name: customerName, email: customerEmail, taxId: customerTaxId },
-        products: cart.map((item) => ({
+        products: items.map((item: any) => ({
           name: item.product.name,
           quantity: item.quantity,
           price: item.product.price,
         })),
         order,
         paymentMethod,
-        ...(paymentMethod === 'credit_card' && {
+        ...(paymentMethod === 'CREDIT_CARD' && {
           card: {
             holderName: cardHolderName,
             number: cardNumber.replace(/\s/g, ''),
@@ -169,10 +165,10 @@ export function Checkout() {
               Resumo do Pedido
             </h2>
             <div className="space-y-4">
-              {cart.map(item => (
+              {items.map((item: any) => (
                 <div key={item.product.id} className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <img src={item.product.imageUrl} alt={item.product.name} className="w-16 h-16 rounded-xl object-cover mr-4 border border-blue-100" />
+                    <img src={item.product.imageUrl || item.product.image_url} alt={item.product.name} className="w-16 h-16 rounded-xl object-cover mr-4 border border-blue-100" />
                     <div>
                       <p className="font-semibold text-blue-900">{item.product.name}</p>
                       <p className="text-sm text-gray-500">Qtd: {item.quantity}</p>
