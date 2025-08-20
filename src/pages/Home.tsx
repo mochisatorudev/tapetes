@@ -1,66 +1,6 @@
-      {/* CATEGORIAS COM ÍCONES */}
-      <section className="py-8 bg-white">
-        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-4 px-4">
-          <button
-            onClick={() => setSelectedCategory('all')}
-            className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === 'all' ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
-          >
-            <span className="mb-1">🏷️</span>
-            Todos
-          </button>
-          {categories.map((category, idx) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === category.id ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
-            >
-              <span className="mb-1">{idx % 3 === 0 ? '🎁' : idx % 3 === 1 ? '⭐' : '😊'}</span>
-              {category.name}
-            </button>
-          ))}
-        </div>
-      </section>
-      {/* CARROSSEL DE PRODUTOS MODERNO */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight animate-fadein">Produtos em Destaque</h2>
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500">Nenhum produto em destaque.</p>
-            </div>
-          ) : (
-            <div className="relative">
-              <div
-                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
-                style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
-              >
-                {filteredProducts.slice(0, 12).map((product, idx) => (
-                  <div
-                    key={product.id}
-                    className="relative min-w-[260px] max-w-xs w-full bg-white rounded-3xl shadow-xl p-4 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center border border-gray-100"
-                  >
-                    {idx < 3 && (
-                      <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
-                    )}
-                    <div className="flex-1 flex flex-col justify-between">
-                      <ProductCard product={product} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="text-center mt-8">
-                <Link
-                  to="/products"
-                  className="text-white px-8 py-3 rounded-full font-bold shadow-lg transition-colors inline-block hover:scale-105"
-                  style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
-                >
-                  Ver Todos os Produtos
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
+// ...existing code...
+// Removido código duplicado fora do componente
+// ...existing code...
       {/* BANNER INSTITUCIONAL */}
       <section className="py-10 bg-gradient-to-r from-emerald-50 to-blue-50">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-4 animate-fadein">
@@ -95,29 +35,11 @@
           </div>
         </div>
       </section>
-      {/* FOOTER MINIMALISTA */}
-      <footer className="text-gray-400 py-10 bg-gray-900 mt-16">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            {settings?.logo_url ? (
-              <img src={settings.logo_url} alt={settings.store_name} className="h-8 w-auto max-w-32 object-contain" />
-            ) : (
-              <span className="text-2xl font-bold text-blue-400">T</span>
-            )}
-            <span className="text-lg font-bold text-white">{settings?.store_name}</span>
-          </div>
-          <div className="flex gap-6 text-sm">
-            {settings?.contact_phone && <span>{settings.contact_phone}</span>}
-            {settings?.contact_email && <span>{settings.contact_email}</span>}
-            {settings?.contact_whatsapp && <span>WhatsApp: {settings.contact_whatsapp}</span>}
-          </div>
-          <span className="text-xs">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
-        </div>
-      </footer>
+// ...existing code...
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Store, Phone, Mail, ChevronLeft, ChevronRight, ShieldCheck, Truck, Gift } from 'lucide-react';
+import { Store, Phone, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, Product, Category, isSupabaseConfigured, getSupabaseStatus } from '../lib/supabase';
 import { mockProducts, mockCategories } from '../lib/mockData';
 import { ProductCard } from '../components/ProductCard';
