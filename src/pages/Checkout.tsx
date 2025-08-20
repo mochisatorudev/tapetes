@@ -66,14 +66,18 @@ export function Checkout() {
     setIsLoading(true);
     try {
       const customerAddress = `${addressStreet}, ${addressNumber} - ${addressNeighborhood}, ${addressCity} - ${addressState}, ${addressZip}`;
-      const orderItems = items.map((item: any) => ({
-        order_id: '',
-        product_id: item.product.id,
-        product_name: item.product.name,
-        price: item.product.price,
-        quantity: item.quantity,
-        total_price: item.product.price * item.quantity,
-      }));
+      // Corrige para aceitar tanto item.product quanto item direto
+      const orderItems = items.map((item: any) => {
+        const product = item.product || item;
+        return {
+          order_id: '',
+          product_id: product.id,
+          product_name: product.name,
+          price: product.price,
+          quantity: item.quantity,
+          total_price: product.price * item.quantity,
+        };
+      });
       const orderPayload = {
         customer_name: customerName,
         customer_email: customerEmail,
@@ -95,12 +99,15 @@ export function Checkout() {
         customerCpf: customerTaxId,
         customerPhone,
         orderId: order.id,
-        items: items.map((item: any) => ({
-          id: item.product.id,
-          name: item.product.name,
-          price: item.product.price,
-          quantity: item.quantity,
-        })),
+        items: items.map((item: any) => {
+          const product = item.product || item;
+          return {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: item.quantity,
+          };
+        }),
         paymentMethod,
         ...(paymentMethod === 'CREDIT_CARD' && {
           creditCardToken: '',
