@@ -101,10 +101,14 @@ export function Checkout() {
           quantity: item.quantity,
           price: item.price,
         }));
+        console.log('[Checkout] Dados enviados para order_items:', itemsToInsert);
         const { data, error } = await supabase
           .from('order_items')
           .insert(itemsToInsert);
-        if (error) throw error;
+        if (error) {
+          console.error('[Checkout] Erro Supabase order_items:', error);
+          throw error;
+        }
         console.log('[Checkout] Itens do pedido inseridos:', data);
       } catch (err) {
         console.error('[Checkout] Falha ao inserir itens do pedido:', err);
