@@ -140,7 +140,7 @@ export function Checkout() {
               <div key={item.product?.id || Math.random()} className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-3">
                   <img
-                    src={item.product?.image_url || item.product?.imageUrl || '/logo.png'}
+                    src={item.product?.image_url || item.product?.imageUrl || item.product?.image || '/logo.png'}
                     alt={item.product?.name || 'Produto'}
                     className="w-14 h-14 rounded-xl object-cover border border-blue-100 shadow-sm"
                   />
@@ -159,11 +159,15 @@ export function Checkout() {
           </div>
         </div>
 
-        {/* Bloco: Dados Pessoais */}
+
+        {/* Bloco: Dados Pessoais + Endereço */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="bg-white/90 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-4 animate-fadein">
-            <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2"><User className="text-blue-400" />Seus Dados</h2>
+            <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2">
+              <User className="text-blue-400" />Dados e Endereço
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Dados pessoais */}
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input type="text" placeholder="Nome Completo" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
@@ -180,13 +184,7 @@ export function Checkout() {
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input type="text" placeholder="Telefone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
               </div>
-            </div>
-          </div>
-
-          {/* Bloco: Endereço */}
-          <div className="bg-white/90 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-4 animate-fadein">
-            <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2"><MapPin className="text-blue-400" />Endereço de Entrega</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Endereço */}
               <div className="relative">
                 <Home className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input type="text" placeholder="Rua" value={addressStreet} onChange={(e) => setAddressStreet(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
@@ -205,7 +203,36 @@ export function Checkout() {
               </div>
               <div className="relative">
                 <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Estado" value={addressState} onChange={(e) => setAddressState(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
+                <select value={addressState} onChange={e => setAddressState(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required>
+                  <option value="">Estado</option>
+                  <option value="AC">Acre</option>
+                  <option value="AL">Alagoas</option>
+                  <option value="AP">Amapá</option>
+                  <option value="AM">Amazonas</option>
+                  <option value="BA">Bahia</option>
+                  <option value="CE">Ceará</option>
+                  <option value="DF">Distrito Federal</option>
+                  <option value="ES">Espírito Santo</option>
+                  <option value="GO">Goiás</option>
+                  <option value="MA">Maranhão</option>
+                  <option value="MT">Mato Grosso</option>
+                  <option value="MS">Mato Grosso do Sul</option>
+                  <option value="MG">Minas Gerais</option>
+                  <option value="PA">Pará</option>
+                  <option value="PB">Paraíba</option>
+                  <option value="PR">Paraná</option>
+                  <option value="PE">Pernambuco</option>
+                  <option value="PI">Piauí</option>
+                  <option value="RJ">Rio de Janeiro</option>
+                  <option value="RN">Rio Grande do Norte</option>
+                  <option value="RS">Rio Grande do Sul</option>
+                  <option value="RO">Rondônia</option>
+                  <option value="RR">Roraima</option>
+                  <option value="SC">Santa Catarina</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="SE">Sergipe</option>
+                  <option value="TO">Tocantins</option>
+                </select>
               </div>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
