@@ -67,14 +67,14 @@ export function Checkout() {
     try {
       const customerAddress = `${addressStreet}, ${addressNumber} - ${addressNeighborhood}, ${addressCity} - ${addressState}, ${addressZip}`;
       // Corrige para aceitar tanto item.product quanto item direto
+      // Apenas os campos obrigatórios para order_items
       const orderItems = items.map((item: any) => {
         const product = item.product || item;
         return {
           product_id: product.id,
-          product_name: product.name,
-          price: product.price,
           quantity: item.quantity,
-          total_price: product.price * item.quantity,
+          price: product.price,
+          order_id: undefined, // será adicionado depois
         };
       });
       // Nunca envie order_items para o insert de pedido
@@ -96,8 +96,10 @@ export function Checkout() {
         const { supabase } = await import('../lib/supabase');
         if (!supabase) throw new Error('Supabase não configurado');
         const itemsToInsert = orderItems.map((item: any) => ({
-          ...item,
           order_id: order.id,
+          product_id: item.product_id,
+          quantity: item.quantity,
+          price: item.price,
         }));
         const { data, error } = await supabase
           .from('order_items')
