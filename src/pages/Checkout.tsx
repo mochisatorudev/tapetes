@@ -131,7 +131,7 @@ export function Checkout() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-8 px-2 animate-fadein">
-      <div className="max-w-3xl mx-auto flex flex-col gap-10">
+      <div className="max-w-3xl mx-auto flex flex-col gap-0">
         {/* Bloco: Resumo do Pedido */}
         <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-4 animate-fadein">
           <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4"><ShoppingCart className="text-blue-400" />Resumo do Pedido</h2>
