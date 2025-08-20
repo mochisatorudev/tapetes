@@ -137,8 +137,8 @@ export function Checkout() {
           <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2"><ShoppingCart className="text-blue-400" />Resumo do Pedido</h2>
           <div className="divide-y divide-blue-50">
             {items.map((item: any) => {
-              const imageUrl = item.product && item.product.image_url ? item.product.image_url : '/logo.png';
-              const productName = item.product && item.product.name ? item.product.name : 'Produto';
+              const imageUrl = item.product?.image_url || '/logo.png';
+              const productName = item.product?.name || 'Produto';
               return (
                 <div key={item.product?.id || Math.random()} className="flex items-center justify-between py-2">
                   <div className="flex items-center gap-3">
@@ -163,18 +163,14 @@ export function Checkout() {
           </div>
         </div>
 
-
         {/* Bloco: Dados Pessoais + Endereço */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="bg-white/90 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-4 animate-fadein">
             <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2">
-              <User className="text-blue-400" />Dados e Endereço
+              <User className="text-blue-400" />Dados
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Dados pessoais */}
-              <div className="col-span-2">
-                <h3 className="text-lg font-semibold text-blue-800 mb-2">Dados</h3>
-              </div>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input type="text" placeholder="Nome Completo" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
@@ -192,7 +188,8 @@ export function Checkout() {
                 <input type="text" placeholder="Telefone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
               </div>
               {/* Endereço */}
-              <div className="col-span-2 mt-2">
+              <div className="col-span-2 mt-2 flex items-center gap-2">
+                <MapPin className="text-blue-400" size={22} />
                 <h3 className="text-lg font-semibold text-blue-800 mb-2">Endereço</h3>
               </div>
               <div className="relative">
