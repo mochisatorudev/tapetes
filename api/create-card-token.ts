@@ -1,3 +1,4 @@
+
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import axios from 'axios';
 
@@ -10,9 +11,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const API_BASE_URL = 'https://pay.nivuspay.com.br/api/v1';
 
   try {
+    // Garante que o body seja objeto
+    let payload = req.body;
+    if (typeof payload === 'string') {
+      try {
+        payload = JSON.parse(payload);
+      } catch (e) {
+        console.error('[create-card-token] Body JSON parse error:', e, payload);
+        return res.status(400).json({ error: 'Body inválido (não é JSON)' });
+      }
+    }
+    console.log('[create-card-token] Payload recebido:', payload);
     const response = await axios.post(
       `${API_BASE_URL}/transaction.createCardToken`,
-      req.body,
+      payload,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -21,10 +33,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         timeout: 30000,
       }
     );
+    console.log('[create-card-token] Resposta Nivus:', response.data);
     return res.status(200).json(response.data);
   } catch (error: any) {
+    console.error('[create-card-token] Erro:', error?.response?.data || error);
     return res.status(500).json({
-      error: error.response?.data?.message || error.message || 'Erro ao criar token',
+      error: error?.response?.data?.message || error?.message || 'Erro ao criar token',
+      nivusError: error?.response?.data || null,
     });
   }
 }
