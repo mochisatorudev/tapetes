@@ -77,6 +77,7 @@ export function Checkout() {
           total_price: product.price * item.quantity,
         };
       });
+      // Nunca envie order_items para o insert de pedido
       const orderPayload = {
         customer_name: customerName,
         customer_email: customerEmail,
