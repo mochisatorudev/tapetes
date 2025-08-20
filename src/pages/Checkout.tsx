@@ -81,13 +81,14 @@ export function Checkout() {
       });
       // Nunca envie order_items para o insert de pedido
       const orderPayload = {
-        customer_name: customerName,
-        customer_email: customerEmail,
-        customer_cpf: customerTaxId,
-        customer_phone: customerPhone,
-        customer_address: customerAddress,
-        total_amount: total,
-        status: 'pending',
+  customer_name: customerName,
+  customer_email: customerEmail,
+  customer_cpf: customerTaxId,
+  customer_phone: customerPhone,
+  customer_address: customerAddress,
+  total_amount: total,
+  status: 'pending',
+  payment_method: paymentMethod,
       };
       console.log('[Checkout] Enviando orderPayload:', orderPayload);
       const order = await createOrder(orderPayload as any);
