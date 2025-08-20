@@ -1,3 +1,6 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { supabase, StoreSettings, isSupabaseConfigured } from '../lib/supabase';
+
 // Função para aplicar o tema e configurações visuais
 function applyThemeSettings(settings: StoreSettings) {
   const root = document.documentElement;
@@ -67,8 +70,42 @@ function applyThemeSettings(settings: StoreSettings) {
   root.style.setProperty('--button-font-weight', settings.button_font_weight);
   // Aplicar espaçamentos
   root.style.setProperty('--card-padding', settings.card_padding);
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase, StoreSettings, isSupabaseConfigured } from '../lib/supabase';
+  // Aplicar configurações adicionais
+  root.style.setProperty('--button-padding-x', settings.button_padding_x);
+  root.style.setProperty('--button-padding-y', settings.button_padding_y);
+  root.style.setProperty('--section-margin-y', settings.section_margin_y);
+  // Aplicar animações
+  root.style.setProperty('--hover-transition-duration', settings.hover_transition_duration);
+  root.style.setProperty('--button-hover-scale', settings.button_hover_scale);
+  root.style.setProperty('--card-hover-scale', settings.card_hover_scale);
+  // Aplicar cores de status
+  root.style.setProperty('--success-color', settings.success_color);
+  root.style.setProperty('--warning-color', settings.warning_color);
+  root.style.setProperty('--error-color', settings.error_color);
+  root.style.setProperty('--info-color', settings.info_color);
+  // Aplicar cores de navegação
+  root.style.setProperty('--nav-link-color', settings.nav_link_color);
+  root.style.setProperty('--nav-link-hover-color', settings.nav_link_hover_color);
+  root.style.setProperty('--nav-link-active-color', settings.nav_link_active_color);
+  root.style.setProperty('--breadcrumb-color', settings.breadcrumb_color);
+  root.style.setProperty('--breadcrumb-separator-color', settings.breadcrumb_separator_color);
+  // Aplicar fontes
+  root.style.setProperty('--font-family', settings.font_family);
+  root.style.setProperty('--heading-font', settings.heading_font);
+  // Atualizar favicon se configurado
+  if (settings.favicon_url) {
+    const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = settings.favicon_url;
+    }
+  }
+  // Aplicar modo escuro se habilitado
+  if (settings.enable_dark_mode) {
+    document.body.classList.add('dark');
+  } else {
+    document.body.classList.remove('dark');
+  }
+};
 
 // (interface StoreSettings removida, usar apenas o tipo importado de supabase.ts)
 
@@ -78,55 +115,28 @@ interface StoreContextType {
   refreshSettings: () => Promise<void>;
 }
 
+
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
-export const useStore = () => {
-  const context = useContext(StoreContext);
-  if (!context) {
-    throw new Error('useStore must be used within StoreProvider');
-  }
-  return context;
-};
-    root.style.setProperty('--card-padding', settings.card_padding);
-    root.style.setProperty('--button-padding-x', settings.button_padding_x);
-    root.style.setProperty('--button-padding-y', settings.button_padding_y);
-    root.style.setProperty('--section-margin-y', settings.section_margin_y);
+export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [settings, setSettings] = useState<StoreSettings | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    // Aplicar animações
-    root.style.setProperty('--hover-transition-duration', settings.hover_transition_duration);
-    root.style.setProperty('--button-hover-scale', settings.button_hover_scale);
-    root.style.setProperty('--card-hover-scale', settings.card_hover_scale);
-
-    // Aplicar cores de status
-    root.style.setProperty('--success-color', settings.success_color);
-    root.style.setProperty('--warning-color', settings.warning_color);
-    root.style.setProperty('--error-color', settings.error_color);
-    root.style.setProperty('--info-color', settings.info_color);
-
-    // Aplicar cores de navegação
-    root.style.setProperty('--nav-link-color', settings.nav_link_color);
-    root.style.setProperty('--nav-link-hover-color', settings.nav_link_hover_color);
-    root.style.setProperty('--nav-link-active-color', settings.nav_link_active_color);
-    root.style.setProperty('--breadcrumb-color', settings.breadcrumb_color);
-    root.style.setProperty('--breadcrumb-separator-color', settings.breadcrumb_separator_color);
-
-    // Aplicar fontes
-    root.style.setProperty('--font-family', settings.font_family);
-    root.style.setProperty('--heading-font', settings.heading_font);
-    
-    // Atualizar favicon se configurado
-    if (settings.favicon_url) {
-      const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
-      if (favicon) {
-        favicon.href = settings.favicon_url;
-      }
+  const fetchSettings = async () => {
+    setLoading(true);
+    if (!isSupabaseConfigured()) {
+      setLoading(false);
+      return;
     }
-    // Aplicar modo escuro se habilitado
-    if (settings.enable_dark_mode) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
+    const { data, error } = await supabase!
+      .from('store_settings')
+      .select('*')
+      .single();
+    if (!error && data) {
+      setSettings(data as StoreSettings);
+      applyThemeSettings(data as StoreSettings);
     }
+    setLoading(false);
   };
 
   const refreshSettings = async () => {
@@ -134,30 +144,20 @@ export const useStore = () => {
   };
 
   useEffect(() => {
-    // Aplicar configurações críticas imediatamente
-    if (settings) {
-      applyThemeSettings(settings);
-    }
-    
     fetchSettings();
 
-    // Escutar mudanças em tempo real apenas se Supabase estiver configurado
     if (isSupabaseConfigured()) {
       const subscription = supabase!
         .channel('store_settings_changes')
-        .on('postgres_changes', 
-          { event: '*', schema: 'public', table: 'store_settings' },
-          () => {
-            fetchSettings();
-          }
-        )
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'store_settings' }, fetchSettings)
         .subscribe();
-
       return () => {
         subscription.unsubscribe();
       };
     }
-  }, [settings]);
+  }, []);
+
+
 
   const value = {
     settings,
