@@ -1,239 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase, StoreSettings, isSupabaseConfigured } from '../lib/supabase';
 
-interface StoreSettings {
-  id: string;
-  // Informações básicas
-  store_name: string;
-  store_description: string;
-  store_slogan: string;
-  
-  // URLs de mídia
-  logo_url: string;
-  favicon_url: string;
-  banner_url: string;
-  header_banner_url: string;
-  about_image_url: string;
-  
-  // Cores e tema
-  primary_color: string;
-  secondary_color: string;
-  accent_color: string;
-  background_color: string;
-  text_color: string;
-  
-  // Cores de botões
-  button_primary_bg_color: string;
-  button_primary_text_color: string;
-  button_primary_hover_bg_color: string;
-  button_primary_hover_text_color: string;
-  button_secondary_bg_color: string;
-  button_secondary_text_color: string;
-  button_secondary_hover_bg_color: string;
-  button_secondary_hover_text_color: string;
-  button_success_bg_color: string;
-  button_success_text_color: string;
-  button_success_hover_bg_color: string;
-  button_success_hover_text_color: string;
-  button_danger_bg_color: string;
-  button_danger_text_color: string;
-  button_danger_hover_bg_color: string;
-  button_danger_hover_text_color: string;
-
-  // Cores de textos específicos
-  product_title_color: string;
-  product_description_color: string;
-  product_price_color: string;
-  header_text_color: string;
-  footer_text_color: string;
-  link_color: string;
-  link_hover_color: string;
-
-  // Cores de ícones específicos
-  cart_icon_color: string;
-  star_icon_color: string;
-  search_icon_color: string;
-  menu_icon_color: string;
-  social_icon_color: string;
-  social_icon_hover_color: string;
-
-  // Textos personalizáveis de botões
-  button_add_to_cart_text: string;
-  button_buy_now_text: string;
-  button_view_product_text: string;
-  button_continue_shopping_text: string;
-  button_checkout_text: string;
-  button_view_cart_text: string;
-  button_search_text: string;
-  button_filter_text: string;
-  button_clear_filters_text: string;
-
-  // Efeitos visuais
-  card_shadow_color: string;
-  card_shadow_hover_color: string;
-  card_border_radius: string;
-  button_border_radius: string;
-  input_border_radius: string;
-
-  // Cores de bordas
-  card_border_color: string;
-  input_border_color: string;
-  input_focus_border_color: string;
-  button_border_color: string;
-
-  // Cores de fundo específicas
-  card_background_color: string;
-  input_background_color: string;
-  header_background_color: string;
-  footer_background_color: string;
-  sidebar_background_color: string;
-
-  // Tipografia específica
-  product_title_font_size: string;
-  product_title_font_weight: string;
-  product_description_font_size: string;
-  product_description_font_weight: string;
-  product_price_font_size: string;
-  product_price_font_weight: string;
-  button_font_size: string;
-  button_font_weight: string;
-
-  // Espaçamentos
-  card_padding: string;
-  button_padding_x: string;
-  button_padding_y: string;
-  section_margin_y: string;
-
-  // Animações e transições
-  hover_transition_duration: string;
-  button_hover_scale: string;
-  card_hover_scale: string;
-
-  // Cores de status
-  success_color: string;
-  warning_color: string;
-  error_color: string;
-  info_color: string;
-
-  // Textos de mensagens
-  message_success_text: string;
-  message_error_text: string;
-  message_loading_text: string;
-  message_empty_cart_text: string;
-  message_no_products_text: string;
-
-  // Cores de navegação
-  nav_link_color: string;
-  nav_link_hover_color: string;
-  nav_link_active_color: string;
-  breadcrumb_color: string;
-  breadcrumb_separator_color: string;
-
-  // Tipografia
-  font_family: string;
-  heading_font: string;
-  
-  // Configurações regionais
-  currency: string;
-  currency_symbol: string;
-  language: string;
-  timezone: string;
-  
-  // Funcionalidades
-  enable_reviews: boolean;
-  enable_notifications: boolean;
-  enable_wishlist: boolean;
-  enable_compare: boolean;
-  enable_chat: boolean;
-  maintenance_mode: boolean;
-  
-  // SEO
-  meta_title: string;
-  meta_description: string;
-  meta_keywords: string;
-  google_analytics_id: string;
-  facebook_pixel_id: string;
-  
-  // Contato
-  contact_email: string;
-  contact_phone: string;
-  contact_whatsapp: string;
-  contact_address: string;
-  
-  // Redes sociais
-  facebook_url: string;
-  instagram_url: string;
-  twitter_url: string;
-  youtube_url: string;
-  linkedin_url: string;
-  tiktok_url: string;
-  
-  // Configurações de e-commerce
-  min_order_value: number;
-  free_shipping_threshold: number;
-  tax_rate: number;
-  
-  // Métodos de pagamento
-  enable_credit_card: boolean;
-  enable_debit_card: boolean;
-  enable_pix: boolean;
-  enable_boleto: boolean;
-  enable_paypal: boolean;
-  
-  // Configurações de entrega
-  default_shipping_cost: number;
-  estimated_delivery_days: number;
-  enable_local_pickup: boolean;
-  
-  // Textos personalizáveis
-  welcome_message: string;
-  footer_text: string;
-  
-  // SEO
-  meta_title: string;
-  meta_description: string;
-  meta_keywords: string;
-  meta_author: string;
-  meta_robots: string;
-  canonical_url: string;
-  og_title: string;
-  og_description: string;
-  og_image: string;
-  og_type: string;
-  twitter_card: string;
-  twitter_title: string;
-  twitter_description: string;
-  twitter_image: string;
-  schema_type: string;
-  schema_description: string;
-  
-  // Integrações
-  google_analytics_id: string;
-  google_tag_manager_id: string;
-  facebook_pixel_id: string;
-  google_ads_conversion_id: string;
-  google_ads_conversion_label: string;
-  hotjar_id: string;
-  microsoft_clarity_id: string;
-  tiktok_pixel_id: string;
-  pinterest_tag_id: string;
-  snapchat_pixel_id: string;
-  custom_head_scripts: string;
-  custom_body_scripts: string;
-  custom_footer_scripts: string;
-  privacy_policy_url: string;
-  terms_of_service_url: string;
-  return_policy_text: string;
-  
-  // Configurações de layout
-  products_per_page: number;
-  enable_dark_mode: boolean;
-  header_style: string;
-  footer_style: string;
-  
-  created_at: string;
-  updated_at: string;
-}
+// (interface StoreSettings removida, usar apenas o tipo importado de supabase.ts)
 
 interface StoreContextType {
   settings: StoreSettings | null;
@@ -261,79 +29,6 @@ const defaultSettings: StoreSettings = {
   favicon_url: '',
   banner_url: '',
   header_banner_url: '',
-  about_image_url: '',
-  primary_color: '#3b82f6',
-  secondary_color: '#10b981',
-  accent_color: '#f59e0b',
-  background_color: '#f9fafb',
-  text_color: '#111827',
-  
-  // Cores de botões
-  button_primary_bg_color: '#3b82f6',
-  button_primary_text_color: '#ffffff',
-  button_primary_hover_bg_color: '#2563eb',
-  button_primary_hover_text_color: '#ffffff',
-  button_secondary_bg_color: '#6b7280',
-  button_secondary_text_color: '#ffffff',
-  button_secondary_hover_bg_color: '#4b5563',
-  button_secondary_hover_text_color: '#ffffff',
-  button_success_bg_color: '#10b981',
-  button_success_text_color: '#ffffff',
-  button_success_hover_bg_color: '#059669',
-  button_success_hover_text_color: '#ffffff',
-  button_danger_bg_color: '#ef4444',
-  button_danger_text_color: '#ffffff',
-  button_danger_hover_bg_color: '#dc2626',
-  button_danger_hover_text_color: '#ffffff',
-
-  // Cores de textos específicos
-  product_title_color: '#111827',
-  product_description_color: '#6b7280',
-  product_price_color: '#3b82f6',
-  header_text_color: '#111827',
-  footer_text_color: '#ffffff',
-  link_color: '#3b82f6',
-  link_hover_color: '#2563eb',
-
-  // Cores de ícones específicos
-  cart_icon_color: '#3b82f6',
-  star_icon_color: '#fbbf24',
-  search_icon_color: '#6b7280',
-  menu_icon_color: '#374151',
-  social_icon_color: '#6b7280',
-  social_icon_hover_color: '#3b82f6',
-
-  // Textos personalizáveis de botões
-  button_add_to_cart_text: 'Adicionar ao Carrinho',
-  button_buy_now_text: 'Comprar Agora',
-  button_view_product_text: 'Ver Produto',
-  button_continue_shopping_text: 'Continuar Comprando',
-  button_checkout_text: 'Finalizar Pedido',
-  button_view_cart_text: 'Ver Carrinho',
-  button_search_text: 'Buscar',
-  button_filter_text: 'Filtrar',
-  button_clear_filters_text: 'Limpar Filtros',
-
-  // Efeitos visuais
-  card_shadow_color: 'rgba(0, 0, 0, 0.1)',
-  card_shadow_hover_color: 'rgba(0, 0, 0, 0.15)',
-  card_border_radius: '8px',
-  button_border_radius: '6px',
-  input_border_radius: '6px',
-
-  // Cores de bordas
-  card_border_color: '#e5e7eb',
-  input_border_color: '#d1d5db',
-  input_focus_border_color: '#3b82f6',
-  button_border_color: 'transparent',
-
-  // Cores de fundo específicas
-  card_background_color: '#ffffff',
-  input_background_color: '#ffffff',
-  header_background_color: '#ffffff',
-  footer_background_color: '#111827',
-  sidebar_background_color: '#f9fafb',
-
   // Tipografia específica
   product_title_font_size: '1.25rem',
   product_title_font_weight: '600',
@@ -392,19 +87,6 @@ const defaultSettings: StoreSettings = {
   meta_title: '',
   meta_description: '',
   meta_keywords: '',
-  meta_author: '',
-  meta_robots: 'index,follow',
-  canonical_url: '',
-  og_title: '',
-  og_description: '',
-  og_image: '',
-  og_type: 'website',
-  twitter_card: 'summary_large_image',
-  twitter_title: '',
-  twitter_description: '',
-  twitter_image: '',
-  schema_type: 'Store',
-  schema_description: '',
   
   // Integrações
   google_analytics_id: '',
@@ -415,18 +97,6 @@ const defaultSettings: StoreSettings = {
   hotjar_id: '',
   microsoft_clarity_id: '',
   tiktok_pixel_id: '',
-  pinterest_tag_id: '',
-  snapchat_pixel_id: '',
-  custom_head_scripts: '',
-  custom_body_scripts: '',
-  custom_footer_scripts: '',
-  privacy_policy_url: '',
-  terms_of_service_url: '',
-  return_policy_text: '',
-  products_per_page: 12,
-  enable_dark_mode: false,
-  header_style: 'default',
-  footer_style: 'default',
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };
@@ -446,7 +116,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
 
     try {
-      console.log('🔄 Buscando configurações da loja...');
+      // console.log('🔄 Buscando configurações da loja...'); // Removido para evitar log infinito
       const { data, error } = await supabase!
         .from('store_settings')
         .select('*')
@@ -640,25 +310,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       metaKeywords.setAttribute('name', 'keywords');
       document.head.appendChild(metaKeywords);
     }
-    if (settings.meta_keywords) {
-      metaKeywords.setAttribute('content', settings.meta_keywords);
-    }
-    
-    // Atualizar meta author
-    let metaAuthor = document.querySelector('meta[name="author"]');
-    if (!metaAuthor) {
-      metaAuthor = document.createElement('meta');
-      metaAuthor.setAttribute('name', 'author');
-      document.head.appendChild(metaAuthor);
-    }
-    if (settings.meta_author) {
-      metaAuthor.setAttribute('content', settings.meta_author);
-    }
-    
-    // Atualizar meta robots
-    let metaRobots = document.querySelector('meta[name="robots"]');
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta');
       metaRobots.setAttribute('name', 'robots');
       document.head.appendChild(metaRobots);
     }
@@ -678,61 +329,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Open Graph tags
     const updateMetaProperty = (property: string, content: string) => {
       let meta = document.querySelector(`meta[property="${property}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('property', property);
-        document.head.appendChild(meta);
-      }
-      if (content) {
-        meta.setAttribute('content', content);
-      }
-    };
-    
-    updateMetaProperty('og:title', settings.og_title || settings.store_name);
-    updateMetaProperty('og:description', settings.og_description || settings.store_description);
-    updateMetaProperty('og:image', settings.og_image);
-    updateMetaProperty('og:type', settings.og_type);
-    updateMetaProperty('og:url', settings.canonical_url || window.location.href);
-    
-    // Twitter Card tags
-    const updateMetaName = (name: string, content: string) => {
-      let meta = document.querySelector(`meta[name="${name}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('name', name);
-        document.head.appendChild(meta);
-      }
-      if (content) {
-        meta.setAttribute('content', content);
-      }
-    };
-    
-    updateMetaName('twitter:card', settings.twitter_card);
-    updateMetaName('twitter:title', settings.twitter_title || settings.og_title || settings.store_name);
-    updateMetaName('twitter:description', settings.twitter_description || settings.og_description || settings.store_description);
-    updateMetaName('twitter:image', settings.twitter_image || settings.og_image);
-    
-    // Schema markup
-    if (settings.schema_type) {
-      let schemaScript = document.querySelector('#schema-markup');
-      if (!schemaScript) {
-        schemaScript = document.createElement('script');
-        schemaScript.setAttribute('type', 'application/ld+json');
-        schemaScript.setAttribute('id', 'schema-markup');
-        document.head.appendChild(schemaScript);
-      }
-      
-      const schemaData = {
-        "@context": "https://schema.org",
-        "@type": settings.schema_type,
-        "name": settings.store_name,
-        "description": settings.schema_description || settings.store_description,
-        "url": settings.canonical_url || window.location.origin,
-        "logo": settings.logo_url,
-        "image": settings.og_image,
-        "telephone": settings.contact_phone,
-        "email": settings.contact_email,
-        "address": settings.contact_address
       };
       
       schemaScript.textContent = JSON.stringify(schemaData);
