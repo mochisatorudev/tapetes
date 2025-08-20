@@ -1,8 +1,15 @@
-// filepath: src/pages/Checkout.tsx
 
+import React, { useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
+import { createOrder } from '../lib/supabase';
+import { createPayment } from '../lib/nivusPay';
+import { toast } from 'sonner';
+import { CreditCard, QrCode, User, Mail, FileText, ShoppingCart, ArrowRight, Loader2 } from 'lucide-react';
 
 type PaymentMethod = 'PIX' | 'CREDIT_CARD';
 
+export function Checkout() {
   const { items, clearCart, total } = useCart();
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -15,9 +22,15 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Corrigir tela branca: garantir hooks no topo e checagem de dados
   if (!items || items.length === 0) {
-    return <div className="min-h-screen flex items-center justify-center text-gray-500 text-lg">Seu carrinho está vazio.</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-emerald-50">
+        <div className="bg-white/80 p-10 rounded-3xl shadow-2xl border border-blue-100 text-center">
+          <ShoppingCart className="mx-auto mb-4 text-blue-400" size={48} />
+          <div className="text-gray-500 text-lg font-semibold">Seu carrinho está vazio.</div>
+        </div>
+      </div>
+    );
   }
 
   const handleSubmit = async (event: FormEvent) => {
@@ -27,7 +40,7 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
       return;
     }
 
-    if (paymentMethod === 'credit_card') {
+    if (paymentMethod === 'CREDIT_CARD') {
       if (!cardHolderName || !cardNumber || !cardExpiry || !cardCvc) {
         toast.error('Por favor, preencha todos os dados do cartão.');
         return;
@@ -39,11 +52,10 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
     }
     setIsLoading(true);
     try {
-      // Corrigir nomes das propriedades para o backend
       const order = await createOrder({
         customer_name: customerName,
         customer_email: customerEmail,
-        cpf: customerTaxId,
+        customer_tax_id: customerTaxId,
         items,
         status: 'pending',
       });
@@ -51,21 +63,23 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
       const [expirationMonth, expirationYear] = cardExpiry.replace(/\s/g, '').split('/');
 
       const paymentResult = await createPayment({
-        customer: { name: customerName, email: customerEmail, taxId: customerTaxId },
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_tax_id: customerTaxId,
         products: items.map((item: any) => ({
           name: item.product.name,
           quantity: item.quantity,
           price: item.product.price,
         })),
-        order,
-        paymentMethod,
+        order_id: order.id,
+        payment_method: paymentMethod,
         ...(paymentMethod === 'CREDIT_CARD' && {
           card: {
-            holderName: cardHolderName,
+            holder_name: cardHolderName,
             number: cardNumber.replace(/\s/g, ''),
-            expirationMonth,
-            expirationYear: `20${expirationYear}`,
-            cvv: cardCvc,
+            expiration_month: expirationMonth,
+            expiration_year: `20${expirationYear}`,
+            cvc: cardCvc,
           },
         }),
       });
@@ -103,7 +117,7 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Seção de Dados Pessoais */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">Seus Dados</h2>
+              <h2 className="text-3xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">Seus Dados</h2>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input type="text" placeholder="Nome Completo" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
@@ -120,19 +134,19 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
 
             {/* Seção de Pagamento */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">Pagamento</h2>
+              <h2 className="text-3xl font-extrabold text-blue-900 mb-2 tracking-tight animate-slidein">Pagamento</h2>
               <div className="grid grid-cols-2 gap-4">
-                <div onClick={() => setPaymentMethod('pix')} className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${paymentMethod === 'pix' ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' : 'border-gray-200 hover:border-blue-400'}`}>
-                  <QrCode size={28} className={`${paymentMethod === 'pix' ? 'text-blue-600' : 'text-gray-500'}`} />
+                <div onClick={() => setPaymentMethod('PIX')} className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${paymentMethod === 'PIX' ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' : 'border-gray-200 hover:border-blue-400'}`}>
+                  <QrCode size={28} className={`${paymentMethod === 'PIX' ? 'text-blue-600' : 'text-gray-500'}`} />
                   <span className="mt-2 font-medium">PIX</span>
                 </div>
-                <div onClick={() => setPaymentMethod('credit_card')} className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${paymentMethod === 'credit_card' ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' : 'border-gray-200 hover:border-blue-400'}`}>
-                  <CreditCard size={28} className={`${paymentMethod === 'credit_card' ? 'text-blue-600' : 'text-gray-500'}`} />
+                <div onClick={() => setPaymentMethod('CREDIT_CARD')} className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${paymentMethod === 'CREDIT_CARD' ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' : 'border-gray-200 hover:border-blue-400'}`}>
+                  <CreditCard size={28} className={`${paymentMethod === 'CREDIT_CARD' ? 'text-blue-600' : 'text-gray-500'}`} />
                   <span className="mt-2 font-medium">Cartão</span>
                 </div>
               </div>
 
-              {paymentMethod === 'credit_card' && (
+              {paymentMethod === 'CREDIT_CARD' && (
                 <div className="space-y-4 pt-4 animate-fade-in">
                   <input type="text" placeholder="Nome no Cartão" value={cardHolderName} onChange={(e) => setCardHolderName(e.target.value)} className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
                   <input type="text" placeholder="Número do Cartão" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition" required />
@@ -160,7 +174,7 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
         {/* Coluna da Esquerda: Resumo do Pedido */}
         <div className="row-start-1 lg:row-auto mt-10 lg:mt-0 flex flex-col justify-center p-6 md:p-10">
           <div className="bg-gradient-to-br from-blue-50 to-emerald-50 p-8 rounded-2xl shadow-xl border border-blue-100">
-            <h2 className="text-2xl font-extrabold text-blue-900 flex items-center mb-6 animate-slidein">
+            <h2 className="text-3xl font-extrabold text-blue-900 flex items-center mb-6 animate-slidein">
               <ShoppingCart className="mr-3 text-gray-500" />
               Resumo do Pedido
             </h2>
@@ -185,7 +199,6 @@ type PaymentMethod = 'PIX' | 'CREDIT_CARD';
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
