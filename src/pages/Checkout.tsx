@@ -84,9 +84,11 @@ export function Checkout() {
         status: 'pending',
         order_items: orderItems,
       };
+      console.log('[Checkout] Enviando orderPayload:', orderPayload);
       const order = await createOrder(orderPayload as any);
+      console.log('[Checkout] Resposta createOrder:', order);
       if (!order) throw new Error('Erro ao criar pedido.');
-      const paymentResult = await createPayment({
+      const paymentPayload = {
         amount: total,
         customerName,
         customerEmail,
@@ -103,8 +105,11 @@ export function Checkout() {
         ...(paymentMethod === 'CREDIT_CARD' && {
           creditCardToken: '',
         }),
-      });
-      if (paymentResult) {
+      };
+      console.log('[Checkout] Enviando paymentPayload:', paymentPayload);
+      const paymentResult = await createPayment(paymentPayload);
+      console.log('[Checkout] Resposta createPayment:', paymentResult);
+      if (paymentResult && paymentResult.success && paymentResult.pixCode) {
         clearCart();
         navigate('/order-confirmation', {
           state: {
@@ -115,10 +120,11 @@ export function Checkout() {
           },
         });
       } else {
-        throw new Error('Falha ao criar o pagamento.');
+        toast.error(paymentResult?.error || 'Falha ao criar o pagamento PIX.');
+        throw new Error(paymentResult?.error || 'Falha ao criar o pagamento PIX.');
       }
     } catch (error) {
-      console.error(error);
+      console.error('[Checkout] Erro no fluxo:', error);
       toast.error('Houve um erro ao processar seu pagamento. Tente novamente.');
     } finally {
       setIsLoading(false);
