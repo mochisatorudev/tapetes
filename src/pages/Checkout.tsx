@@ -163,96 +163,96 @@ export function Checkout() {
           </div>
         </section>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-          {/* Bloco: Dados Pessoais */}
-          <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-6 animate-fadein">
-            <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4">
-              <User className="text-blue-400" />Dados Pessoais
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Nome Completo" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="email" placeholder="E-mail" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative">
-                <FileText className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="CPF" value={customerTaxId} onChange={(e) => setCustomerTaxId(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Telefone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-0">
+          {/* Bloco: Dados Pessoais + Endereço juntos */}
+          <section className="bg-white/95 rounded-3xl p-0 flex flex-col gap-0 animate-fadein">
+            <div className="p-6 md:p-8">
+              <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4">
+                <User className="text-blue-400" />Dados Pessoais
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="Nome Completo" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="email" placeholder="E-mail" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative">
+                  <FileText className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="CPF" value={customerTaxId} onChange={(e) => setCustomerTaxId(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="Telefone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
               </div>
             </div>
-          </section>
-
-          {/* Bloco: Endereço */}
-          <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-6 animate-fadein">
-            <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4">
-              <MapPin className="text-blue-400" />Endereço
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="relative">
-                <Home className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Rua" value={addressStreet} onChange={(e) => setAddressStreet(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative">
-                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Número" value={addressNumber} onChange={(e) => setAddressNumber(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative">
-                <Landmark className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Bairro" value={addressNeighborhood} onChange={(e) => setAddressNeighborhood(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative">
-                <Landmark className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="Cidade" value={addressCity} onChange={(e) => setAddressCity(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
-              </div>
-              <div className="relative md:col-span-2">
-                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <select value={addressState} onChange={e => setAddressState(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required>
-                  <option value="">Estado</option>
-                  <option value="AC">Acre</option>
-                  <option value="AL">Alagoas</option>
-                  <option value="AP">Amapá</option>
-                  <option value="AM">Amazonas</option>
-                  <option value="BA">Bahia</option>
-                  <option value="CE">Ceará</option>
-                  <option value="DF">Distrito Federal</option>
-                  <option value="ES">Espírito Santo</option>
-                  <option value="GO">Goiás</option>
-                  <option value="MA">Maranhão</option>
-                  <option value="MT">Mato Grosso</option>
-                  <option value="MS">Mato Grosso do Sul</option>
-                  <option value="MG">Minas Gerais</option>
-                  <option value="PA">Pará</option>
-                  <option value="PB">Paraíba</option>
-                  <option value="PR">Paraná</option>
-                  <option value="PE">Pernambuco</option>
-                  <option value="PI">Piauí</option>
-                  <option value="RJ">Rio de Janeiro</option>
-                  <option value="RN">Rio Grande do Norte</option>
-                  <option value="RS">Rio Grande do Sul</option>
-                  <option value="RO">Rondônia</option>
-                  <option value="RR">Roraima</option>
-                  <option value="SC">Santa Catarina</option>
-                  <option value="SP">São Paulo</option>
-                  <option value="SE">Sergipe</option>
-                  <option value="TO">Tocantins</option>
-                </select>
-              </div>
-              <div className="relative md:col-span-2">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input type="text" placeholder="CEP" value={addressZip} onChange={(e) => setAddressZip(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+            <div className="border-t border-blue-100 p-6 md:p-8">
+              <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4">
+                <MapPin className="text-blue-400" />Endereço
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="relative">
+                  <Home className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="Rua" value={addressStreet} onChange={(e) => setAddressStreet(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative">
+                  <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="Número" value={addressNumber} onChange={(e) => setAddressNumber(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative">
+                  <Landmark className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="Bairro" value={addressNeighborhood} onChange={(e) => setAddressNeighborhood(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative">
+                  <Landmark className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="Cidade" value={addressCity} onChange={(e) => setAddressCity(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
+                <div className="relative md:col-span-2">
+                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <select value={addressState} onChange={e => setAddressState(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required>
+                    <option value="">Estado</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                  </select>
+                </div>
+                <div className="relative md:col-span-2">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input type="text" placeholder="CEP" value={addressZip} onChange={(e) => setAddressZip(e.target.value)} className="w-full pl-10 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition text-base" required />
+                </div>
               </div>
             </div>
           </section>
 
           {/* Bloco: Pagamento */}
-          <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-6 animate-fadein">
+          <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-6 animate-fadein mt-0">
             <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4"><CreditCard className="text-blue-400" />Pagamento</h2>
             <div className="flex flex-col md:flex-row gap-4 mb-2">
               <div onClick={() => setPaymentMethod('PIX')} className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${paymentMethod === 'PIX' ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' : 'border-gray-200 hover:border-blue-400'}`}>
