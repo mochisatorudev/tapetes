@@ -185,9 +185,9 @@ export function Checkout() {
 
         {/* Coluna da Esquerda: Resumo do Pedido */}
         <div className="row-start-1 lg:row-auto mt-10 lg:mt-0 flex flex-col justify-center p-6 md:p-10">
-          <div className="bg-gradient-to-br from-blue-50 to-emerald-50 p-8 rounded-2xl shadow-xl border border-blue-100">
-            <h2 className="text-3xl font-extrabold text-blue-900 flex items-center mb-6 animate-slidein">
-              <ShoppingCart className="mr-3 text-gray-500" />
+          <div className="bg-gradient-to-br from-blue-50 to-emerald-50 p-5 rounded-xl shadow-xl border border-blue-100">
+            <h2 className="text-xl font-bold text-blue-900 flex items-center mb-4 animate-slidein">
+              <ShoppingCart className="mr-2 text-gray-500" />
               Resumo do Pedido
             </h2>
             <div className="space-y-4">
