@@ -141,14 +141,8 @@ export const Home: React.FC = () => {
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-pulse delay-200" />
       </section>
 
-      {/* Benefícios rápidos */}
-      <section className="bg-white py-6 shadow-sm">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-6 px-4">
-          <div className="flex items-center gap-3 text-emerald-600 font-semibold text-base"><ShieldCheck className="w-6 h-6" /> Compra 100% Segura</div>
-          <div className="flex items-center gap-3 text-blue-600 font-semibold text-base"><Truck className="w-6 h-6" /> Entrega Rápida</div>
-          <div className="flex items-center gap-3 text-pink-600 font-semibold text-base"><Gift className="w-6 h-6" /> Brindes Exclusivos</div>
-        </div>
-      </section>
+
+  {/* Benefícios rápidos removidos */}
 
       {/* Categories */}
       <section className="py-8 bg-white">
@@ -215,16 +209,23 @@ export const Home: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <div id="products-carousel" className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+              <div
+                id="products-carousel"
+                className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+                style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
+              >
                 {filteredProducts.slice(0, 12).map((product, idx) => (
                   <div
                     key={product.id}
-                    className="relative min-w-[260px] max-w-xs bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center justify-between transition-transform duration-300 hover:scale-105 group snap-center"
+                    className="relative min-w-[240px] max-w-[260px] w-full bg-white rounded-2xl shadow-lg p-2 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center"
+                    style={{ flex: '0 0 240px' }}
                   >
                     {idx < 3 && (
                       <span className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
                     )}
-                    <ProductCard product={product} />
+                    <div className="flex-1 flex flex-col justify-between">
+                      <ProductCard product={product} />
+                    </div>
                   </div>
                 ))}
               </div>
