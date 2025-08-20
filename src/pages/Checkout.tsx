@@ -75,6 +75,7 @@ export function Checkout() {
           product_name: product.name,
           quantity: item.quantity,
           product_price: product.price,
+          total_price: product.price * item.quantity,
           order_id: undefined, // será adicionado depois
         };
       });
@@ -102,6 +103,7 @@ export function Checkout() {
           product_name: item.product_name,
           quantity: item.quantity,
           product_price: item.product_price,
+          total_price: item.total_price,
         }));
         console.log('[Checkout] Dados enviados para order_items:', itemsToInsert);
         const { data, error } = await supabase
