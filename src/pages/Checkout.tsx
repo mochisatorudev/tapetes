@@ -137,10 +137,10 @@ export function Checkout() {
           <h2 className="text-xl font-bold text-blue-900 flex items-center gap-2 mb-4"><ShoppingCart className="text-blue-400" />Resumo do Pedido</h2>
           <div className="divide-y divide-blue-50">
             {items.map((item: any) => {
-              const imageUrl = item.product?.image_url || '/logo.png';
-              const productName = item.product?.name || 'Produto';
+              const imageUrl = item.image_url || '/logo.png';
+              const productName = item.name || 'Produto';
               return (
-                <div key={item.product?.id || Math.random()} className="flex items-center justify-between py-3">
+                <div key={item.id || Math.random()} className="flex items-center justify-between py-3">
                   <div className="flex items-center gap-4">
                     <img
                       src={imageUrl}
@@ -152,7 +152,7 @@ export function Checkout() {
                       <p className="text-xs text-gray-500">Qtd: {item.quantity}</p>
                     </div>
                   </div>
-                  <span className="font-bold text-emerald-700 text-base">{formatCurrency((item.product?.price || 0) * item.quantity)}</span>
+                  <span className="font-bold text-emerald-700 text-base">{formatCurrency((item.price || 0) * item.quantity)}</span>
                 </div>
               );
             })}
