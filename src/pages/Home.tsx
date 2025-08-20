@@ -1,3 +1,119 @@
+      {/* CATEGORIAS COM ÍCONES */}
+      <section className="py-8 bg-white">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-4 px-4">
+          <button
+            onClick={() => setSelectedCategory('all')}
+            className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === 'all' ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
+          >
+            <span className="mb-1">🏷️</span>
+            Todos
+          </button>
+          {categories.map((category, idx) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === category.id ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
+            >
+              <span className="mb-1">{idx % 3 === 0 ? '🎁' : idx % 3 === 1 ? '⭐' : '😊'}</span>
+              {category.name}
+            </button>
+          ))}
+        </div>
+      </section>
+      {/* CARROSSEL DE PRODUTOS MODERNO */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight animate-fadein">Produtos em Destaque</h2>
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Nenhum produto em destaque.</p>
+            </div>
+          ) : (
+            <div className="relative">
+              <div
+                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+                style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
+              >
+                {filteredProducts.slice(0, 12).map((product, idx) => (
+                  <div
+                    key={product.id}
+                    className="relative min-w-[260px] max-w-xs w-full bg-white rounded-3xl shadow-xl p-4 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center border border-gray-100"
+                  >
+                    {idx < 3 && (
+                      <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
+                    )}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <ProductCard product={product} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <Link
+                  to="/products"
+                  className="text-white px-8 py-3 rounded-full font-bold shadow-lg transition-colors inline-block hover:scale-105"
+                  style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
+                >
+                  Ver Todos os Produtos
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+      {/* BANNER INSTITUCIONAL */}
+      <section className="py-10 bg-gradient-to-r from-emerald-50 to-blue-50">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-4 animate-fadein">
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="text-2xl font-bold mb-2 text-emerald-700">Transforme seu ambiente</h3>
+            <p className="text-lg text-gray-700 mb-4">Produtos selecionados, entrega rápida e suporte humanizado. Sua experiência é prioridade!</p>
+            <Link to="/faq" className="inline-block bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-emerald-700 transition">Dúvidas? Veja o FAQ</Link>
+          </div>
+          <img src="/banner.jpg" alt="Banner" className="w-64 h-40 object-cover rounded-xl shadow-lg border border-emerald-100" />
+        </div>
+      </section>
+      {/* DEPOIMENTOS EM CARROSSEL */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">O que nossos clientes dizem</h3>
+          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“Amei a qualidade e a entrega foi super rápida! Recomendo demais.”</p>
+              <span className="text-emerald-600 font-bold">Juliana S.</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-100">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“Atendimento excelente e produtos lindos. Voltarei a comprar!”</p>
+              <span className="text-blue-600 font-bold">Carlos M.</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-200">
+              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“O site é fácil de navegar e o capacho ficou perfeito na minha porta!”</p>
+              <span className="text-pink-600 font-bold">Renata F.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* FOOTER MINIMALISTA */}
+      <footer className="text-gray-400 py-10 bg-gray-900 mt-16">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            {settings?.logo_url ? (
+              <img src={settings.logo_url} alt={settings.store_name} className="h-8 w-auto max-w-32 object-contain" />
+            ) : (
+              <span className="text-2xl font-bold text-blue-400">T</span>
+            )}
+            <span className="text-lg font-bold text-white">{settings?.store_name}</span>
+          </div>
+          <div className="flex gap-6 text-sm">
+            {settings?.contact_phone && <span>{settings.contact_phone}</span>}
+            {settings?.contact_email && <span>{settings.contact_email}</span>}
+            {settings?.contact_whatsapp && <span>WhatsApp: {settings.contact_whatsapp}</span>}
+          </div>
+          <span className="text-xs">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
+        </div>
+      </footer>
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -13,6 +129,7 @@ export const Home: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [loading, setLoading] = useState(true);
+  // carouselRef removido pois não está em uso
 
   useEffect(() => {
     fetchProducts();
@@ -37,6 +154,7 @@ export const Home: React.FC = () => {
     }
 
     try {
+      if (!supabase) throw new Error('Supabase não configurado');
       const { data, error } = await supabase
         .from('products')
         .select(`
@@ -64,6 +182,7 @@ export const Home: React.FC = () => {
     }
 
     try {
+      if (!supabase) throw new Error('Supabase não configurado');
       const { data, error } = await supabase
         .from('categories')
         .select('*')
@@ -103,42 +222,173 @@ export const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-
-      {/* HERO NOVO */}
+      {/* HERO INOVADOR */}
       <section
-        className="relative text-white py-16 sm:py-24 md:py-32 flex items-center justify-center overflow-hidden"
-        style={{
-          background: settings?.banner_url
-            ? `linear-gradient(120deg,rgba(0,0,0,0.7) 60%,rgba(0,0,0,0.3)), url(${settings.banner_url})`
-            : `linear-gradient(120deg, ${settings?.primary_color || '#3b82f6'} 60%, ${settings?.secondary_color || '#10b981'})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-        }}
+        className="relative text-white py-20 sm:py-32 flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-600 via-emerald-500 to-blue-400"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-transparent pointer-events-none animate-fadein" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none animate-fadein" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center animate-fadein">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg tracking-tight">
-            {settings?.welcome_message || `Bem-vindo à ${settings?.store_name}`}
+          <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 drop-shadow-lg tracking-tight">
+            {settings?.welcome_message || `Sua casa, seu estilo.`}
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-6 opacity-90 max-w-2xl mx-auto leading-relaxed">
-            {settings?.store_description}
+          <p className="text-xl sm:text-2xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
+            {settings?.store_description || 'Tapetes e capachos modernos para transformar ambientes.'}
           </p>
-          {settings?.store_slogan && (
-            <p className="text-base sm:text-lg mb-6 opacity-80 italic max-w-2xl mx-auto">"{settings.store_slogan}"</p>
-          )}
           <Link
             to="/products"
-            className="inline-block bg-white text-lg font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 hover:bg-gray-100 transition-all duration-300"
+            className="inline-block bg-white text-lg font-bold px-10 py-4 rounded-full shadow-xl hover:scale-105 hover:bg-gray-100 transition-all duration-300"
             style={{ color: settings?.primary_color || '#3b82f6' }}
           >
             Ver Produtos
           </Link>
         </div>
-        {/* Animação de formas/flutuantes */}
-        <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-pulse delay-200" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-40 h-40 bg-emerald-400/20 rounded-full blur-2xl animate-pulse" />
+        <div className="absolute right-0 bottom-0 w-32 h-32 bg-blue-400/20 rounded-full blur-2xl animate-pulse delay-200" />
+      </section>
+
+      {/* CATEGORIAS COM ÍCONES */}
+      <section className="py-8 bg-white">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-4 px-4">
+          <button
+            onClick={() => setSelectedCategory('all')}
+            className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === 'all' ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
+          >
+            <span className="mb-1">🏷️</span>
+            Todos
+          </button>
+          {categories.map((category, idx) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === category.id ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
+            >
+              <span className="mb-1">{idx % 3 === 0 ? '🎁' : idx % 3 === 1 ? '⭐' : '😊'}</span>
+              {category.name}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* CARROSSEL DE PRODUTOS MODERNO */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight animate-fadein">Produtos em Destaque</h2>
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Nenhum produto em destaque.</p>
+            </div>
+          ) : (
+            <div className="relative">
+              <div
+                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+                style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
+              >
+                {filteredProducts.slice(0, 12).map((product, idx) => (
+                  <div
+                    key={product.id}
+                    className="relative min-w-[260px] max-w-xs w-full bg-white rounded-3xl shadow-xl p-4 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center border border-gray-100"
+                  >
+                    {idx < 3 && (
+                      <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
+                    )}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <ProductCard product={product} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <Link
+                  to="/products"
+                  className="text-white px-8 py-3 rounded-full font-bold shadow-lg transition-colors inline-block hover:scale-105"
+                  style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
+                >
+                  Ver Todos os Produtos
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* BANNER INSTITUCIONAL */}
+      <section className="py-10 bg-gradient-to-r from-emerald-50 to-blue-50">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-4 animate-fadein">
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="text-2xl font-bold mb-2 text-emerald-700">Transforme seu ambiente</h3>
+            <p className="text-lg text-gray-700 mb-4">Produtos selecionados, entrega rápida e suporte humanizado. Sua experiência é prioridade!</p>
+            <Link to="/faq" className="inline-block bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-emerald-700 transition">Dúvidas? Veja o FAQ</Link>
+          </div>
+          <img src="/banner.jpg" alt="Banner" className="w-64 h-40 object-cover rounded-xl shadow-lg border border-emerald-100" />
+        </div>
+      </section>
+
+      {/* DEPOIMENTOS EM CARROSSEL */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">O que nossos clientes dizem</h3>
+          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“Amei a qualidade e a entrega foi super rápida! Recomendo demais.”</p>
+              <span className="text-emerald-600 font-bold">Juliana S.</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-100">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“Atendimento excelente e produtos lindos. Voltarei a comprar!”</p>
+              <span className="text-blue-600 font-bold">Carlos M.</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-200">
+              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
+              <p className="text-gray-700 italic mb-2">“O site é fácil de navegar e o capacho ficou perfeito na minha porta!”</p>
+              <span className="text-pink-600 font-bold">Renata F.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER MINIMALISTA */}
+      <footer className="text-gray-400 py-10 bg-gray-900 mt-16">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            {settings?.logo_url ? (
+              <img src={settings.logo_url} alt={settings.store_name} className="h-8 w-auto max-w-32 object-contain" />
+            ) : (
+              <span className="text-2xl font-bold text-blue-400">T</span>
+            )}
+            <span className="text-lg font-bold text-white">{settings?.store_name}</span>
+          </div>
+          <div className="flex gap-6 text-sm">
+            {settings?.contact_phone && <span>{settings.contact_phone}</span>}
+            {settings?.contact_email && <span>{settings.contact_email}</span>}
+            {settings?.contact_whatsapp && <span>WhatsApp: {settings.contact_whatsapp}</span>}
+          </div>
+          <span className="text-xs">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
+        </div>
+      </footer>
+
+      {/* HERO INOVADOR */}
+      <section
+        className="relative text-white py-20 sm:py-32 flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-600 via-emerald-500 to-blue-400"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none animate-fadein" />
+        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center animate-fadein">
+          <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 drop-shadow-lg tracking-tight">
+            {settings?.welcome_message || `Sua casa, seu estilo.`}
+          </h1>
+          <p className="text-xl sm:text-2xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
+            {settings?.store_description || 'Tapetes e capachos modernos para transformar ambientes.'}
+          </p>
+          <Link
+            to="/products"
+            className="inline-block bg-white text-lg font-bold px-10 py-4 rounded-full shadow-xl hover:scale-105 hover:bg-gray-100 transition-all duration-300"
+            style={{ color: settings?.primary_color || '#3b82f6' }}
+          >
+            Ver Produtos
+          </Link>
+        </div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-40 h-40 bg-emerald-400/20 rounded-full blur-2xl animate-pulse" />
+        <div className="absolute right-0 bottom-0 w-32 h-32 bg-blue-400/20 rounded-full blur-2xl animate-pulse delay-200" />
       </section>
 
 
