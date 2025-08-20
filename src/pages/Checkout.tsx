@@ -195,7 +195,7 @@ export function Checkout() {
               {/* Endereço */}
               <div className="col-span-2 mt-2">
                 <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-2">
-                  <User className="text-blue-400" />Dados
+                  <MapPin className="text-blue-400" />Endereço
                 </h2>
               </div>
               <div className="relative">
