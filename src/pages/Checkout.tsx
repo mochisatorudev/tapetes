@@ -259,4 +259,5 @@ export function Checkout() {
         </form>
       </div>
     </div>
-  
+  );
+}
