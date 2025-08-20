@@ -131,10 +131,10 @@ export function Checkout() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-8 px-2 animate-fadein">
-      <div className="max-w-3xl mx-auto flex flex-col gap-0">
+      <div className="max-w-3xl mx-auto flex flex-col md:flex-row gap-8">
         {/* Bloco: Resumo do Pedido */}
-        <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-4 animate-fadein">
-          <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4"><ShoppingCart className="text-blue-400" />Resumo do Pedido</h2>
+        <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-4 md:p-6 flex flex-col gap-4 animate-fadein w-full md:max-w-xs self-start">
+          <h2 className="text-xl font-bold text-blue-900 flex items-center gap-2 mb-4"><ShoppingCart className="text-blue-400" />Resumo do Pedido</h2>
           <div className="divide-y divide-blue-50">
             {items.map((item: any) => {
               const imageUrl = item.product?.image_url || '/logo.png';
@@ -145,25 +145,25 @@ export function Checkout() {
                     <img
                       src={imageUrl}
                       alt={productName}
-                      className="w-16 h-16 rounded-xl object-cover border border-blue-100 shadow-sm"
+                      className="w-12 h-12 rounded-xl object-cover border border-blue-100 shadow-sm"
                     />
                     <div>
-                      <p className="font-semibold text-blue-900 text-base">{productName}</p>
+                      <p className="font-semibold text-blue-900 text-sm">{productName}</p>
                       <p className="text-xs text-gray-500">Qtd: {item.quantity}</p>
                     </div>
                   </div>
-                  <span className="font-bold text-emerald-700 text-lg">{formatCurrency((item.product?.price || 0) * item.quantity)}</span>
+                  <span className="font-bold text-emerald-700 text-base">{formatCurrency((item.product?.price || 0) * item.quantity)}</span>
                 </div>
               );
             })}
           </div>
-          <div className="flex justify-between items-center text-xl font-bold text-blue-900 mt-6">
+          <div className="flex justify-between items-center text-lg font-bold text-blue-900 mt-4">
             <span>Total</span>
             <span>{formatCurrency(total)}</span>
           </div>
         </section>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-0">
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-0">
           {/* Bloco: Dados Pessoais + Endereço juntos */}
           <section className="bg-white/95 rounded-3xl p-0 flex flex-col gap-0 animate-fadein">
             <div className="p-6 md:p-8">
@@ -254,7 +254,7 @@ export function Checkout() {
           {/* Bloco: Pagamento */}
           <section className="bg-white/95 rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8 flex flex-col gap-6 animate-fadein mt-0">
             <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2 mb-4"><CreditCard className="text-blue-400" />Pagamento</h2>
-            <div className="flex flex-col md:flex-row gap-4 mb-2">
+            <div className="flex flex-row gap-4 mb-2">
               <div onClick={() => setPaymentMethod('PIX')} className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${paymentMethod === 'PIX' ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' : 'border-gray-200 hover:border-blue-400'}`}>
                 <QrCode size={32} className={`${paymentMethod === 'PIX' ? 'text-blue-600' : 'text-gray-500'}`} />
                 <span className="mt-2 font-medium">PIX</span>
