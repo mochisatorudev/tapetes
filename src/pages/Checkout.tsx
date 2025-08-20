@@ -70,7 +70,6 @@ export function Checkout() {
       const orderItems = items.map((item: any) => {
         const product = item.product || item;
         return {
-          order_id: '',
           product_id: product.id,
           product_name: product.name,
           price: product.price,
@@ -86,12 +85,28 @@ export function Checkout() {
         customer_address: customerAddress,
         total_amount: total,
         status: 'pending',
-        order_items: orderItems,
       };
       console.log('[Checkout] Enviando orderPayload:', orderPayload);
       const order = await createOrder(orderPayload as any);
       console.log('[Checkout] Resposta createOrder:', order);
       if (!order) throw new Error('Erro ao criar pedido.');
+      // Inserir os itens do pedido na tabela order_items usando Supabase diretamente
+      try {
+        const { supabase } = await import('../lib/supabase');
+        if (!supabase) throw new Error('Supabase não configurado');
+        const itemsToInsert = orderItems.map((item: any) => ({
+          ...item,
+          order_id: order.id,
+        }));
+        const { data, error } = await supabase
+          .from('order_items')
+          .insert(itemsToInsert);
+        if (error) throw error;
+        console.log('[Checkout] Itens do pedido inseridos:', data);
+      } catch (err) {
+        console.error('[Checkout] Falha ao inserir itens do pedido:', err);
+        toast.error('Itens do pedido não foram salvos corretamente.');
+      }
       const paymentPayload = {
         amount: total,
         customerName,
