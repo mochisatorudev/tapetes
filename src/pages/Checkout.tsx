@@ -67,11 +67,12 @@ export function Checkout() {
     try {
       const customerAddress = `${addressStreet}, ${addressNumber} - ${addressNeighborhood}, ${addressCity} - ${addressState}, ${addressZip}`;
       // Corrige para aceitar tanto item.product quanto item direto
-      // Apenas os campos obrigatórios existentes para order_items
+      // Campos obrigatórios para order_items: product_id, product_name, quantity, order_id
       const orderItems = items.map((item: any) => {
         const product = item.product || item;
         return {
           product_id: product.id,
+          product_name: product.name,
           quantity: item.quantity,
           order_id: undefined, // será adicionado depois
         };
@@ -97,6 +98,7 @@ export function Checkout() {
         const itemsToInsert = orderItems.map((item: any) => ({
           order_id: order.id,
           product_id: item.product_id,
+          product_name: item.product_name,
           quantity: item.quantity,
         }));
         console.log('[Checkout] Dados enviados para order_items:', itemsToInsert);
