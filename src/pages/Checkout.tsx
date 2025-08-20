@@ -140,7 +140,7 @@ export function Checkout() {
               <div key={item.product?.id || Math.random()} className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-3">
                   <img
-                    src={item.product?.image_url || item.product?.imageUrl || item.product?.image || '/logo.png'}
+                    src={item.product?.image_url || '/logo.png'}
                     alt={item.product?.name || 'Produto'}
                     className="w-14 h-14 rounded-xl object-cover border border-blue-100 shadow-sm"
                   />
