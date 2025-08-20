@@ -52,35 +52,47 @@ export function Checkout() {
     }
     setIsLoading(true);
     try {
-      const order = await createOrder({
+
+      // Prepare order items for DB (Omit id, created_at)
+      const orderItems = items.map((item: any) => ({
+        order_id: '', // will be set by DB
+        product_id: item.product.id,
+        product_name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+        total_price: item.product.price * item.quantity,
+      }));
+
+      const orderPayload = {
         customer_name: customerName,
         customer_email: customerEmail,
-        customer_tax_id: customerTaxId,
-        items,
+        customer_cpf: customerTaxId,
+        customer_address: '',
+        total_amount: total,
         status: 'pending',
-      });
+        order_items: orderItems,
+      };
 
-      const [expirationMonth, expirationYear] = cardExpiry.replace(/\s/g, '').split('/');
+      // Type matches: Omit<Order, 'id' | 'created_at' | 'updated_at'> & { order_items: Omit<OrderItem, 'id' | 'created_at'>[] }
+      const order = await createOrder(orderPayload as any);
+      if (!order) throw new Error('Erro ao criar pedido.');
 
       const paymentResult = await createPayment({
-        customer_name: customerName,
-        customer_email: customerEmail,
-        customer_tax_id: customerTaxId,
-        products: items.map((item: any) => ({
+        amount: total,
+        customerName,
+        customerEmail,
+        customerCpf: customerTaxId,
+        customerPhone: '',
+        orderId: order.id,
+        items: items.map((item: any) => ({
+          id: item.product.id,
           name: item.product.name,
-          quantity: item.quantity,
           price: item.product.price,
+          quantity: item.quantity,
         })),
-        order_id: order.id,
-        payment_method: paymentMethod,
+        paymentMethod,
         ...(paymentMethod === 'CREDIT_CARD' && {
-          card: {
-            holder_name: cardHolderName,
-            number: cardNumber.replace(/\s/g, ''),
-            expiration_month: expirationMonth,
-            expiration_year: `20${expirationYear}`,
-            cvc: cardCvc,
-          },
+          creditCardToken: '', // You should generate a token before
         }),
       });
 
@@ -180,15 +192,19 @@ export function Checkout() {
             </h2>
             <div className="space-y-4">
               {items.map((item: any) => (
-                <div key={item.product.id} className="flex items-center justify-between">
+                <div key={item.product?.id || Math.random()} className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <img src={item.product.imageUrl || item.product.image_url} alt={item.product.name} className="w-16 h-16 rounded-xl object-cover mr-4 border border-blue-100" />
+                    <img
+                      src={item.product?.imageUrl || item.product?.image_url || '/public/logo.png'}
+                      alt={item.product?.name || 'Produto'}
+                      className="w-16 h-16 rounded-xl object-cover mr-4 border border-blue-100"
+                    />
                     <div>
-                      <p className="font-semibold text-blue-900">{item.product.name}</p>
+                      <p className="font-semibold text-blue-900">{item.product?.name || 'Produto'}</p>
                       <p className="text-sm text-gray-500">Qtd: {item.quantity}</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-emerald-700">{formatCurrency(item.product.price * item.quantity)}</p>
+                  <p className="font-semibold text-emerald-700">{formatCurrency((item.product?.price || 0) * item.quantity)}</p>
                 </div>
               ))}
             </div>
