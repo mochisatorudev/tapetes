@@ -1,3 +1,10 @@
+export const useStore = () => {
+  const context = React.useContext(StoreContext);
+  if (!context) {
+    throw new Error('useStore must be used within StoreProvider');
+  }
+  return context;
+};
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase, StoreSettings, isSupabaseConfigured } from '../lib/supabase';
 
