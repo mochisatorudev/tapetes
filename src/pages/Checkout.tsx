@@ -110,22 +110,26 @@ export function Checkout() {
       }
       let creditCardToken = '';
       if (paymentMethod === 'CREDIT_CARD') {
-        // Gerar token do cartão
-        const { createCardToken } = await import('../lib/nivusPay');
+        // Gerar token do cartão via endpoint backend para evitar CORS
         const [expMonth, expYear] = cardExpiry.split('/').map(s => s.trim());
-        const cardTokenResult = await createCardToken({
-          cardNumber,
-          cardCvv: cardCvc,
-          cardExpirationMonth: expMonth,
-          cardExpirationYear: expYear,
-          holderName: cardHolderName,
-          holderDocument: customerTaxId,
+        const res = await fetch('/api/create-card-token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            cardNumber,
+            cardCvv: cardCvc,
+            cardExpirationMonth: expMonth,
+            cardExpirationYear: expYear,
+            holderName: cardHolderName,
+            holderDocument: customerTaxId,
+          }),
         });
-        if (!cardTokenResult.success || !cardTokenResult.token) {
-          toast.error(cardTokenResult.error || 'Erro ao gerar token do cartão');
-          throw new Error(cardTokenResult.error || 'Erro ao gerar token do cartão');
+        const data = await res.json();
+        if (!res.ok || !data.token) {
+          toast.error(data.error || 'Erro ao gerar token do cartão');
+          throw new Error(data.error || 'Erro ao gerar token do cartão');
         }
-        creditCardToken = cardTokenResult.token;
+        creditCardToken = data.token;
       }
       const paymentPayload = {
         amount: total,
