@@ -377,8 +377,6 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
 
       {/* HERO INOVADOR */}
       <section
@@ -640,3 +638,4 @@ export const Home: React.FC = () => {
       </footer>
     </div>
   );
+}
