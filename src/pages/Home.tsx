@@ -1,43 +1,12 @@
 // ...existing code...
 // Removido código duplicado fora do componente
 // ...existing code...
-      {/* BANNER INSTITUCIONAL */}
-      <section className="py-10 bg-gradient-to-r from-emerald-50 to-blue-50">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-4 animate-fadein">
-          <div className="flex-1 text-center md:text-left">
-            <h3 className="text-2xl font-bold mb-2 text-emerald-700">Transforme seu ambiente</h3>
-            <p className="text-lg text-gray-700 mb-4">Produtos selecionados, entrega rápida e suporte humanizado. Sua experiência é prioridade!</p>
-            <Link to="/faq" className="inline-block bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-emerald-700 transition">Dúvidas? Veja o FAQ</Link>
-          </div>
-          <img src="/banner.jpg" alt="Banner" className="w-64 h-40 object-cover rounded-xl shadow-lg border border-emerald-100" />
-        </div>
-      </section>
-      {/* DEPOIMENTOS EM CARROSSEL */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">O que nossos clientes dizem</h3>
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
-            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
-              <p className="text-gray-700 italic mb-2">“Amei a qualidade e a entrega foi super rápida! Recomendo demais.”</p>
-              <span className="text-emerald-600 font-bold">Juliana S.</span>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-100">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
-              <p className="text-gray-700 italic mb-2">“Atendimento excelente e produtos lindos. Voltarei a comprar!”</p>
-              <span className="text-blue-600 font-bold">Carlos M.</span>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-200">
-              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
-              <p className="text-gray-700 italic mb-2">“O site é fácil de navegar e o capacho ficou perfeito na minha porta!”</p>
-              <span className="text-pink-600 font-bold">Renata F.</span>
-            </div>
-          </div>
-        </div>
-      </section>
+// ...existing code...
 // ...existing code...
 
 import React, { useState, useEffect } from 'react';
+// Import Google Fonts elegant
+import '../index.css';
 import { Link } from 'react-router-dom';
 import { Store, Phone, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, Product, Category, isSupabaseConfigured, getSupabaseStatus } from '../lib/supabase';
@@ -143,23 +112,24 @@ export const Home: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen bg-[#f5f6fa] font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
       {/* HERO INOVADOR */}
       <section
-        className="relative text-white py-20 sm:py-32 flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-600 via-emerald-500 to-blue-400"
+        className="relative text-[#1a2238] py-24 sm:py-36 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#1a2238] via-[#283655] to-[#f4d160]"
+        style={{ fontFamily: `'Playfair Display', serif` }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none animate-fadein" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center animate-fadein">
-          <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 drop-shadow-lg tracking-tight">
+          <h1 className="text-6xl sm:text-7xl font-extrabold mb-6 drop-shadow-lg tracking-tight" style={{ fontFamily: `'Playfair Display', serif`, color: '#f4d160' }}>
             {settings?.welcome_message || `Sua casa, seu estilo.`}
           </h1>
-          <p className="text-xl sm:text-2xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-2xl sm:text-3xl mb-10 opacity-90 max-w-2xl mx-auto leading-relaxed" style={{ color: '#f5f6fa', fontFamily: 'Inter, sans-serif' }}>
             {settings?.store_description || 'Tapetes e capachos modernos para transformar ambientes.'}
           </p>
           <Link
             to="/products"
-            className="inline-block bg-white text-lg font-bold px-10 py-4 rounded-full shadow-xl hover:scale-105 hover:bg-gray-100 transition-all duration-300"
-            style={{ color: settings?.primary_color || '#3b82f6' }}
+            className="inline-block bg-[#f4d160] text-[#1a2238] text-xl font-bold px-12 py-5 rounded-full shadow-xl hover:scale-105 hover:bg-[#ffe082] transition-all duration-300 border-2 border-[#1a2238]"
+            style={{ fontFamily: 'Inter, sans-serif' }}
           >
             Ver Produtos
           </Link>
@@ -168,23 +138,35 @@ export const Home: React.FC = () => {
         <div className="absolute right-0 bottom-0 w-32 h-32 bg-blue-400/20 rounded-full blur-2xl animate-pulse delay-200" />
       </section>
 
-      {/* CATEGORIAS COM ÍCONES */}
-      <section className="py-8 bg-white">
-        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-4 px-4">
+      {/* CATEGORIAS COM ILUSTRAÇÕES */}
+      <section className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6 px-4">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === 'all' ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
+            className={`flex flex-col items-center px-6 py-5 rounded-2xl shadow transition-all hover:scale-105 border-2 ${selectedCategory === 'all' ? 'border-[#1a2238] bg-[#f5f6fa] text-[#1a2238] font-bold' : 'border-gray-200 bg-white text-gray-700'}`}
           >
-            <span className="mb-1">🏷️</span>
+            <span className="mb-2">
+              {/* Tag SVG */}
+              <svg width="36" height="36" fill="none" viewBox="0 0 36 36"><rect x="6" y="10" width="24" height="16" rx="4" fill="#e0e7ef"/><rect x="10" y="14" width="16" height="8" rx="2" fill="#1a2238"/></svg>
+            </span>
             Todos
           </button>
           {categories.map((category, idx) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 ${selectedCategory === category.id ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-gray-50 text-gray-700'}`}
+              className={`flex flex-col items-center px-6 py-5 rounded-2xl shadow transition-all hover:scale-105 border-2 ${selectedCategory === category.id ? 'border-[#1a2238] bg-[#f5f6fa] text-[#1a2238] font-bold' : 'border-gray-200 bg-white text-gray-700'}`}
             >
-              <span className="mb-1">{idx % 3 === 0 ? '🎁' : idx % 3 === 1 ? '⭐' : '😊'}</span>
+              <span className="mb-2">
+                {/* Ilustração SVG diferente para cada categoria */}
+                {idx % 3 === 0 ? (
+                  <svg width="36" height="36" fill="none" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#e0e7ef"/><circle cx="18" cy="18" r="10" fill="#f4d160"/></svg>
+                ) : idx % 3 === 1 ? (
+                  <svg width="36" height="36" fill="none" viewBox="0 0 36 36"><rect x="8" y="8" width="20" height="20" rx="6" fill="#e0e7ef"/><rect x="12" y="12" width="12" height="12" rx="3" fill="#1a2238"/></svg>
+                ) : (
+                  <svg width="36" height="36" fill="none" viewBox="0 0 36 36"><ellipse cx="18" cy="18" rx="16" ry="10" fill="#e0e7ef"/><ellipse cx="18" cy="18" rx="8" ry="5" fill="#f4d160"/></svg>
+                )}
+              </span>
               {category.name}
             </button>
           ))}
@@ -270,22 +252,22 @@ export const Home: React.FC = () => {
       </section>
 
       {/* FOOTER MINIMALISTA */}
-      <footer className="text-gray-400 py-10 bg-gray-900 mt-16">
+      <footer className="text-[#1a2238] py-14 bg-[#f4d160] mt-20 border-t-4 border-[#1a2238]" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.02em' }}>
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {settings?.logo_url ? (
-              <img src={settings.logo_url} alt={settings.store_name} className="h-8 w-auto max-w-32 object-contain" />
+              <img src={settings.logo_url} alt={settings.store_name} className="h-10 w-auto max-w-40 object-contain" />
             ) : (
-              <span className="text-2xl font-bold text-blue-400">T</span>
+              <span className="text-3xl font-bold text-[#1a2238]">T</span>
             )}
-            <span className="text-lg font-bold text-white">{settings?.store_name}</span>
+            <span className="text-2xl font-bold" style={{ fontFamily: `'Playfair Display', serif` }}>{settings?.store_name}</span>
           </div>
-          <div className="flex gap-6 text-sm">
+          <div className="flex gap-8 text-lg">
             {settings?.contact_phone && <span>{settings.contact_phone}</span>}
             {settings?.contact_email && <span>{settings.contact_email}</span>}
             {settings?.contact_whatsapp && <span>WhatsApp: {settings.contact_whatsapp}</span>}
           </div>
-          <span className="text-xs">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
+          <span className="text-base font-medium">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
         </div>
       </footer>
 
