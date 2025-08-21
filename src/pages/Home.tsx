@@ -112,23 +112,23 @@ export const Home: React.FC = () => {
   }
 
   return (
-  <div className="min-h-screen bg-[#f5f6fa] font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+  <div className="min-h-screen bg-[#f5f8ff] font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
       {/* HERO INOVADOR */}
       <section
-        className="relative text-[#1a2238] py-24 sm:py-36 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#1a2238] via-[#283655] to-[#f4d160]"
+        className="relative text-[#183153] py-12 sm:py-20 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#183153] via-[#2563eb] to-[#60a5fa]"
         style={{ fontFamily: `'Playfair Display', serif` }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none animate-fadein" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center animate-fadein">
-          <h1 className="text-6xl sm:text-7xl font-extrabold mb-6 drop-shadow-lg tracking-tight" style={{ fontFamily: `'Playfair Display', serif`, color: '#f4d160' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg tracking-tight" style={{ fontFamily: `'Playfair Display', serif`, color: '#fff' }}>
             {settings?.welcome_message || `Sua casa, seu estilo.`}
           </h1>
-          <p className="text-2xl sm:text-3xl mb-10 opacity-90 max-w-2xl mx-auto leading-relaxed" style={{ color: '#f5f6fa', fontFamily: 'Inter, sans-serif' }}>
+          <p className="text-base sm:text-lg md:text-xl mb-6 opacity-90 max-w-2xl mx-auto leading-relaxed" style={{ color: '#e0e7ef', fontFamily: 'Inter, sans-serif' }}>
             {settings?.store_description || 'Tapetes e capachos modernos para transformar ambientes.'}
           </p>
           <Link
             to="/products"
-            className="inline-block bg-[#f4d160] text-[#1a2238] text-xl font-bold px-12 py-5 rounded-full shadow-xl hover:scale-105 hover:bg-[#ffe082] transition-all duration-300 border-2 border-[#1a2238]"
+            className="inline-block bg-[#2563eb] text-white text-base sm:text-lg font-bold px-8 py-3 rounded-full shadow-xl hover:scale-105 hover:bg-[#1d4ed8] transition-all duration-300 border-2 border-[#183153]"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             Ver Produtos
@@ -139,11 +139,11 @@ export const Home: React.FC = () => {
       </section>
 
       {/* CATEGORIAS COM ILUSTRAÇÕES */}
-      <section className="py-12 bg-white">
+  <section className="py-8 bg-white">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6 px-4">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`flex flex-col items-center px-6 py-5 rounded-2xl shadow transition-all hover:scale-105 border-2 ${selectedCategory === 'all' ? 'border-[#1a2238] bg-[#f5f6fa] text-[#1a2238] font-bold' : 'border-gray-200 bg-white text-gray-700'}`}
+            className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 border-2 ${selectedCategory === 'all' ? 'border-[#2563eb] bg-[#e0e7ef] text-[#2563eb] font-bold' : 'border-gray-200 bg-white text-gray-700'}`}
           >
             <span className="mb-2">
               {/* Tag SVG */}
@@ -155,7 +155,7 @@ export const Home: React.FC = () => {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`flex flex-col items-center px-6 py-5 rounded-2xl shadow transition-all hover:scale-105 border-2 ${selectedCategory === category.id ? 'border-[#1a2238] bg-[#f5f6fa] text-[#1a2238] font-bold' : 'border-gray-200 bg-white text-gray-700'}`}
+              className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all hover:scale-105 border-2 ${selectedCategory === category.id ? 'border-[#2563eb] bg-[#e0e7ef] text-[#2563eb] font-bold' : 'border-gray-200 bg-white text-gray-700'}`}
             >
               <span className="mb-2">
                 {/* Ilustração SVG diferente para cada categoria */}
@@ -174,9 +174,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* CARROSSEL DE PRODUTOS MODERNO */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+  <section className="py-12 bg-gradient-to-b from-[#e0e7ef] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight animate-fadein">Produtos em Destaque</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-8 text-[#183153] tracking-tight animate-fadein">Produtos em Destaque</h2>
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500">Nenhum produto em destaque.</p>
@@ -184,16 +184,16 @@ export const Home: React.FC = () => {
           ) : (
             <div className="relative">
               <div
-                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+                className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
                 style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
               >
                 {filteredProducts.slice(0, 12).map((product, idx) => (
                   <div
                     key={product.id}
-                    className="relative min-w-[260px] max-w-xs w-full bg-white rounded-3xl shadow-xl p-4 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center border border-gray-100"
+                    className="relative min-w-[200px] max-w-xs w-full bg-white rounded-2xl shadow-lg p-3 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center border border-gray-100"
                   >
                     {idx < 3 && (
-                      <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
+                      <span className="absolute top-2 left-2 bg-gradient-to-r from-[#2563eb] to-[#60a5fa] text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
                     )}
                     <div className="flex-1 flex flex-col justify-between">
                       <ProductCard product={product} />
@@ -201,11 +201,10 @@ export const Home: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <div className="text-center mt-8">
+              <div className="text-center mt-6">
                 <Link
                   to="/products"
-                  className="text-white px-8 py-3 rounded-full font-bold shadow-lg transition-colors inline-block hover:scale-105"
-                  style={{ backgroundColor: settings?.primary_color || '#3b82f6' }}
+                  className="text-white px-6 py-2 rounded-full font-bold shadow-lg transition-colors inline-block hover:scale-105 bg-[#2563eb]"
                 >
                   Ver Todos os Produtos
                 </Link>
@@ -215,59 +214,47 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* BANNER INSTITUCIONAL */}
-      <section className="py-10 bg-gradient-to-r from-emerald-50 to-blue-50">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-4 animate-fadein">
-          <div className="flex-1 text-center md:text-left">
-            <h3 className="text-2xl font-bold mb-2 text-emerald-700">Transforme seu ambiente</h3>
-            <p className="text-lg text-gray-700 mb-4">Produtos selecionados, entrega rápida e suporte humanizado. Sua experiência é prioridade!</p>
-            <Link to="/faq" className="inline-block bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-emerald-700 transition">Dúvidas? Veja o FAQ</Link>
-          </div>
-          <img src="/banner.jpg" alt="Banner" className="w-64 h-40 object-cover rounded-xl shadow-lg border border-emerald-100" />
-        </div>
-      </section>
-
       {/* DEPOIMENTOS EM CARROSSEL */}
-      <section className="py-16 bg-white">
+      <section className="py-10 bg-white">
         <div className="max-w-4xl mx-auto px-4">
-          <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">O que nossos clientes dizem</h3>
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
-            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
-              <p className="text-gray-700 italic mb-2">“Amei a qualidade e a entrega foi super rápida! Recomendo demais.”</p>
-              <span className="text-emerald-600 font-bold">Juliana S.</span>
+          <h3 className="text-xl sm:text-2xl font-bold text-center mb-6 text-[#183153]">O que nossos clientes dizem</h3>
+          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+            <div className="bg-[#f5f8ff] rounded-xl p-5 shadow text-center flex flex-col items-center min-w-[220px] max-w-[240px] snap-center animate-fadein">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="w-12 h-12 rounded-full mb-2" />
+              <p className="text-gray-700 italic mb-1 text-sm">“Amei a qualidade e a entrega foi super rápida! Recomendo demais.”</p>
+              <span className="text-[#2563eb] font-bold text-xs">Juliana S.</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-100">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
-              <p className="text-gray-700 italic mb-2">“Atendimento excelente e produtos lindos. Voltarei a comprar!”</p>
-              <span className="text-blue-600 font-bold">Carlos M.</span>
+            <div className="bg-[#f5f8ff] rounded-xl p-5 shadow text-center flex flex-col items-center min-w-[220px] max-w-[240px] snap-center animate-fadein delay-100">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" className="w-12 h-12 rounded-full mb-2" />
+              <p className="text-gray-700 italic mb-1 text-sm">“Atendimento excelente e produtos lindos. Voltarei a comprar!”</p>
+              <span className="text-[#2563eb] font-bold text-xs">Carlos M.</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-6 shadow text-center flex flex-col items-center min-w-[320px] max-w-[340px] snap-center animate-fadein delay-200">
-              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" className="w-16 h-16 rounded-full mb-3" />
-              <p className="text-gray-700 italic mb-2">“O site é fácil de navegar e o capacho ficou perfeito na minha porta!”</p>
-              <span className="text-pink-600 font-bold">Renata F.</span>
+            <div className="bg-[#f5f8ff] rounded-xl p-5 shadow text-center flex flex-col items-center min-w-[220px] max-w-[240px] snap-center animate-fadein delay-200">
+              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" className="w-12 h-12 rounded-full mb-2" />
+              <p className="text-gray-700 italic mb-1 text-sm">“O site é fácil de navegar e o capacho ficou perfeito na minha porta!”</p>
+              <span className="text-[#2563eb] font-bold text-xs">Renata F.</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* FOOTER MINIMALISTA */}
-      <footer className="text-[#1a2238] py-14 bg-[#f4d160] mt-20 border-t-4 border-[#1a2238]" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.02em' }}>
+      <footer className="text-[#183153] py-10 bg-[#e0e7ef] mt-16 border-t-2 border-[#2563eb]" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.02em' }}>
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             {settings?.logo_url ? (
-              <img src={settings.logo_url} alt={settings.store_name} className="h-10 w-auto max-w-40 object-contain" />
+              <img src={settings.logo_url} alt={settings.store_name} className="h-8 w-auto max-w-32 object-contain" />
             ) : (
-              <span className="text-3xl font-bold text-[#1a2238]">T</span>
+              <span className="text-2xl font-bold text-[#2563eb]">T</span>
             )}
-            <span className="text-2xl font-bold" style={{ fontFamily: `'Playfair Display', serif` }}>{settings?.store_name}</span>
+            <span className="text-lg font-bold" style={{ fontFamily: `'Playfair Display', serif` }}>{settings?.store_name}</span>
           </div>
-          <div className="flex gap-8 text-lg">
+          <div className="flex gap-6 text-sm">
             {settings?.contact_phone && <span>{settings.contact_phone}</span>}
             {settings?.contact_email && <span>{settings.contact_email}</span>}
             {settings?.contact_whatsapp && <span>WhatsApp: {settings.contact_whatsapp}</span>}
           </div>
-          <span className="text-base font-medium">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
+          <span className="text-xs font-medium">{settings?.footer_text || 'Todos os direitos reservados.'}</span>
         </div>
       </footer>
 
