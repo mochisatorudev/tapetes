@@ -74,78 +74,46 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <Link to={`/product/${product.id}`} className="group">
-      <div className="custom-card overflow-hidden transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg h-full flex flex-col">
-        <div className="relative">
+    <Link to={`/product/${product.id}`} className="group block">
+      <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full border border-gray-100 group-hover:-translate-y-1">
+        <div className="relative flex items-center justify-center bg-gradient-to-br from-blue-50 to-white rounded-t-2xl p-4 h-48">
           <img
             src={product.image_url}
             alt={product.name}
-            className="w-full h-32 sm:h-40 md:h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-            style={{ borderRadius: 'var(--card-border-radius) var(--card-border-radius) 0 0' }}
+            className="object-contain h-32 w-32 drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
           {product.stock_quantity < 10 && (
-            <span 
-              className="absolute top-1 left-1 sm:top-2 sm:left-2 text-white text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 rounded text-xs"
-              style={{ backgroundColor: settings?.error_color || '#ef4444' }}
-            >
-              Últimas unidades
-            </span>
+            <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full shadow">Últimas unidades</span>
           )}
         </div>
-        
-        <div className="p-3 sm:p-4 flex-1 flex flex-col">
-          <h3 
-            className="product-title text-sm sm:text-base md:text-lg mb-2 group-hover:opacity-80 transition-colors line-clamp-2 flex-shrink-0"
-          >
-            {product.name}
-          </h3>
-          
-          {/* Avaliações */}
+        <div className="flex-1 flex flex-col px-4 pt-3 pb-4">
+          <h3 className="font-semibold text-base md:text-lg text-gray-900 mb-1 line-clamp-2 group-hover:text-blue-700 transition-colors">{product.name}</h3>
           {reviewCount > 0 && (
-            <div className="flex items-center space-x-1 mb-2 flex-shrink-0">
+            <div className="flex items-center gap-1 mb-1">
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
-                    className={`star-icon h-3 w-3 sm:h-4 sm:w-4 ${
-                      star <= averageRating
-                        ? 'fill-current'
-                        : 'text-gray-300'
-                    }`}
+                    className={`h-4 w-4 ${star <= Math.round(averageRating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+                    fill={star <= Math.round(averageRating) ? 'currentColor' : 'none'}
                   />
                 ))}
               </div>
-              <span 
-                className="text-xs hidden sm:inline"
-                style={{ color: settings?.product_description_color || '#6b7280' }}
-              >
-                {averageRating.toFixed(1)} ({reviewCount} {reviewCount === 1 ? 'avaliação' : 'avaliações'})
-              </span>
+              <span className="text-xs text-gray-500">{averageRating.toFixed(1)} ({reviewCount})</span>
             </div>
           )}
-          
-          <div className="mb-3 flex-shrink-0">
-            <span 
-              className="text-xs sm:text-sm"
-              style={{ color: settings?.success_color || '#10b981' }}
-            >
-              ✓ Disponível
-            </span>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-xl font-bold text-blue-700">R$ {product.price.toFixed(2).replace('.', ',')}</span>
           </div>
-          
-          <div className="flex items-center justify-between mt-auto flex-shrink-0">
-            <span className="product-price text-base sm:text-lg md:text-xl">
-              R$ {product.price.toFixed(2).replace('.', ',')}
-            </span>
-            
-            <button
-              onClick={handleAddToCart}
-              className="btn-primary p-2 flex-shrink-0"
-              title={settings?.button_add_to_cart_text || 'Adicionar ao carrinho'}
-            >
-              <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4" style={{ color: 'currentColor' }} />
-            </button>
-          </div>
+          <button
+            onClick={handleAddToCart}
+            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 flex items-center justify-center gap-2 font-semibold shadow transition-all text-sm"
+            title={settings?.button_add_to_cart_text || 'Adicionar ao carrinho'}
+          >
+            <ShoppingCart className="h-4 w-4" />
+            <span>Adicionar</span>
+          </button>
         </div>
       </div>
     </Link>
