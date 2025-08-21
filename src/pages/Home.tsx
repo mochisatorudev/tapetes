@@ -554,8 +554,8 @@ export const Home: React.FC = () => {
               <div className="flex items-center space-x-2 mb-4">
                 {settings?.logo_url ? (
                   <img 
-                    src={settings.logo_url} 
-                    alt={settings.store_name}
+                    src={settings?.logo_url || ''}
+                    alt={settings?.store_name || 'Logo'}
                     className="h-8 sm:h-12 w-auto max-w-32 sm:max-w-48 object-contain"
                   />
                 ) : (
@@ -565,7 +565,7 @@ export const Home: React.FC = () => {
               </div>
               <p className="text-gray-300 mb-4">{settings?.store_description}</p>
               {settings?.contact_address && (
-                <p className="text-gray-400 text-sm">{settings.contact_address}</p>
+                <p className="text-gray-400 text-sm">{settings?.contact_address || ''}</p>
               )}
             </div>
 
@@ -577,17 +577,17 @@ export const Home: React.FC = () => {
                   {settings?.contact_phone && (
                     <p className="flex items-center space-x-2">
                       <Phone className="h-4 w-4" />
-                      <span>{settings.contact_phone}</span>
+                      <span>{settings?.contact_phone || ''}</span>
                     </p>
                   )}
                   {settings?.contact_email && (
                     <p className="flex items-center space-x-2">
                       <Mail className="h-4 w-4" />
-                      <span>{settings.contact_email}</span>
+                      <span>{settings?.contact_email || ''}</span>
                     </p>
                   )}
                   {settings?.contact_whatsapp && (
-                    <p className="text-sm">WhatsApp: {settings.contact_whatsapp}</p>
+                    <p className="text-sm">WhatsApp: {settings?.contact_whatsapp || ''}</p>
                   )}
                 </div>
               </div>
@@ -600,7 +600,7 @@ export const Home: React.FC = () => {
                 <div className="flex space-x-4">
                   {settings?.facebook_url && (
                     <a 
-                      href={settings.facebook_url} 
+                      href={settings?.facebook_url || '#'}
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-gray-300 hover:text-white transition-colors"
@@ -610,7 +610,7 @@ export const Home: React.FC = () => {
                   )}
                   {settings?.instagram_url && (
                     <a 
-                      href={settings.instagram_url} 
+                      href={settings?.instagram_url || '#'}
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-gray-300 hover:text-white transition-colors"
@@ -620,7 +620,7 @@ export const Home: React.FC = () => {
                   )}
                   {settings?.twitter_url && (
                     <a 
-                      href={settings.twitter_url} 
+                      href={settings?.twitter_url || '#'}
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-gray-300 hover:text-white transition-colors"
@@ -634,7 +634,7 @@ export const Home: React.FC = () => {
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-gray-400">{settings?.footer_text}</p>
+            <p className="text-gray-400">{settings?.footer_text || ''}</p>
           </div>
         </div>
       </footer>

@@ -8,7 +8,8 @@ export function Products() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data, error } = await supabase
+  if (!supabase) throw new Error('Supabase não configurado');
+  const { data, error } = await supabase
         .from('products')
         .select('*');
       if (!error && data) setProducts(data);
