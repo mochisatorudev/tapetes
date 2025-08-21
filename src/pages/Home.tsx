@@ -219,11 +219,11 @@ export const Home: React.FC = () => {
                 {filteredProducts.slice(0, 12).map((product, idx) => (
                   <div
                     key={product.id}
-                    className="relative min-w-[240px] max-w-[260px] w-full bg-white rounded-2xl shadow-lg p-2 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center"
-                    style={{ flex: '0 0 240px' }}
+                    className="relative min-w-[270px] max-w-[320px] w-full bg-white rounded-2xl shadow-md hover:shadow-lg p-2 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center"
+                    style={{ flex: '0 0 270px' }}
                   >
                     {idx < 3 && (
-                      <span className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce">NOVO</span>
+                      <span className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce z-20">NOVO</span>
                     )}
                     <div className="flex-1 flex flex-col justify-between">
                       <ProductCard product={product} />
@@ -377,8 +377,6 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </footer>
-
-      {/* HERO INOVADOR */}
       <section
         className="relative text-white py-20 sm:py-32 flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-600 via-emerald-500 to-blue-400"
       >

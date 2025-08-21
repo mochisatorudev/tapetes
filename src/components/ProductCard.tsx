@@ -75,19 +75,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Link to={`/product/${product.id}`} className="group block">
-      <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full border border-gray-100 group-hover:-translate-y-1">
-        <div className="relative flex items-center justify-center bg-gradient-to-br from-blue-50 to-white rounded-t-2xl p-4 h-48">
+      <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full border border-gray-100" style={{ minWidth: 270, maxWidth: 320, width: '100%' }}>
+        <div className="relative flex items-center justify-center bg-gradient-to-br from-blue-50 to-white rounded-t-2xl p-4 h-60">
           <img
             src={product.image_url}
             alt={product.name}
-            className="object-contain h-32 w-32 drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+            className="object-contain h-44 w-44 drop-shadow group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
           {product.stock_quantity < 10 && (
             <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full shadow">Últimas unidades</span>
           )}
         </div>
-        <div className="flex-1 flex flex-col px-4 pt-3 pb-4">
+        <div className="flex-1 flex flex-col px-5 pt-3 pb-4">
           <h3 className="font-semibold text-base md:text-lg text-gray-900 mb-1 line-clamp-2 group-hover:text-blue-700 transition-colors">{product.name}</h3>
           {reviewCount > 0 && (
             <div className="flex items-center gap-1 mb-1">
@@ -104,7 +104,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           )}
           <div className="flex items-center gap-2 mt-2">
-            <span className="text-xl font-bold text-blue-700">R$ {product.price.toFixed(2).replace('.', ',')}</span>
+            <span className="text-2xl font-bold text-emerald-600">R$ {product.price.toFixed(2).replace('.', ',')}</span>
           </div>
           <button
             onClick={handleAddToCart}
