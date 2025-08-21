@@ -640,4 +640,3 @@ export const Home: React.FC = () => {
       </footer>
     </div>
   );
-}
