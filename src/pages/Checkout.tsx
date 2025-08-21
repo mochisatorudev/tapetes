@@ -33,10 +33,10 @@ export function Checkout() {
 
   if (!items || items.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-8 px-2 animate-fadein overflow-x-hidden">
-  <div className="max-w-3xl mx-auto flex flex-col md:flex-row gap-8 overflow-x-hidden">
-          <ShoppingCart className="mx-auto mb-4 text-blue-400" size={48} />
-          <div className="text-gray-500 text-lg font-semibold">Seu carrinho está vazio.</div>
+      <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+        <div className="text-center">
+          <ShoppingCart className="mx-auto mb-4 text-[#2563eb]" size={40} />
+          <div className="text-[#2563eb] text-lg font-semibold">Seu carrinho está vazio.</div>
         </div>
       </div>
     );

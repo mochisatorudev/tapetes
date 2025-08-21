@@ -82,10 +82,10 @@ export const ThankYou: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Verificando seu pagamento...</h2>
+      <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
+          <div className="animate-spin rounded-full h-14 w-14 border-b-2 border-[#2563eb] mx-auto mb-4"></div>
+          <h2 className="text-lg font-semibold text-[#2563eb] mb-2">Verificando seu pagamento...</h2>
           <p className="text-gray-600">Aguarde enquanto confirmamos seu pedido</p>
         </div>
       </div>
@@ -94,13 +94,13 @@ export const ThankYou: React.FC = () => {
 
   if (!orderData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Pedido não encontrado</h2>
+      <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
+          <h2 className="text-lg font-semibold text-[#2563eb] mb-2">Pedido não encontrado</h2>
           <p className="text-gray-600 mb-6">Não foi possível encontrar os dados do seu pedido.</p>
           <Link
             to="/"
-            className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-[#2563eb] text-white py-2 px-6 rounded-lg hover:bg-[#1d4ed8] transition-colors"
           >
             Voltar à Loja
           </Link>

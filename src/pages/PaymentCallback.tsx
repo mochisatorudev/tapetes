@@ -50,6 +50,9 @@ export const PaymentCallback: React.FC = () => {
             setMessage('Pagamento pendente. Aguarde a confirmação.');
         }
 
+        if (!supabase) {
+          throw new Error('Supabase client não inicializado');
+        }
         await supabase
           .from('orders')
           .update({ status: orderStatus })
@@ -61,7 +64,8 @@ export const PaymentCallback: React.FC = () => {
         if (status === 'success') {
           navigate('/thank-you', { 
             state: { orderId },
-            search: `?orderId=${orderId}&paymentId=${paymentId}&verified=true`
+            // @ts-ignore
+            to: `/order-confirmation?orderId=${orderId}&paymentId=${paymentId}&verified=true`
           });
         } else {
           navigate('/cart');
@@ -102,8 +106,8 @@ export const PaymentCallback: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
+    <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
         {getIcon()}
         
         <h1 className={`text-2xl font-bold mt-4 mb-2 ${getStatusColor()}`}>

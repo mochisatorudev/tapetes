@@ -16,24 +16,24 @@ export const ProductPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      fetchProduct();
-      fetchReviews();
-    }
-  }, [id]);
-
-  const fetchProduct = async () => {
-    if (!isSupabaseConfigured()) {
-      console.warn('Supabase not configured. Using mock product data.');
-      const mockProduct = mockProducts.find(p => p.id === id);
-      if (mockProduct) {
-        setProduct(mockProduct);
-      }
-      setLoading(false);
-      return;
+    if (loading) {
+      return (
+        <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+          <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-[#2563eb]"></div>
+        </div>
+      );
     }
 
-    try {
+    if (!product) {
+      return (
+        <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+          <div className="text-center">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#2563eb]">Produto não encontrado</h2>
+            <p className="text-gray-600 mt-2 text-base">O produto que você está procurando não existe.</p>
+          </div>
+        </div>
+      );
+    }
       const { data, error } = await supabase
         .from('products')
         .select(`

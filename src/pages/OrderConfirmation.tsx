@@ -85,8 +85,8 @@ export const OrderConfirmation: React.FC = () => {
   const paymentInfo = getPaymentMethodInfo();
   const PaymentIcon = paymentInfo.icon;
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
+    <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
+      <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
         <PaymentIcon className={`h-16 w-16 ${paymentInfo.color} mx-auto mb-4`} />
         
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
