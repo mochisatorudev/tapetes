@@ -16,41 +16,33 @@ export const ProductPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (loading) {
-      return (
-        <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
-          <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-[#2563eb]"></div>
-        </div>
-      );
-    }
-
-    if (!product) {
-      return (
-        <div className="min-h-screen bg-[#f5f8ff] flex items-center justify-center font-serif" style={{ fontFamily: `'Playfair Display', serif` }}>
-          <div className="text-center">
-            <h2 className="text-xl sm:text-2xl font-bold text-[#2563eb]">Produto não encontrado</h2>
-            <p className="text-gray-600 mt-2 text-base">O produto que você está procurando não existe.</p>
-          </div>
-        </div>
-      );
-    }
-      const { data, error } = await supabase
-        .from('products')
-        .select(`
-          *,
-          category:categories(*)
-        `)
-        .eq('id', id)
-        .single();
-
-      if (error) throw error;
-      setProduct(data);
-    } catch (error) {
-      console.error('Erro ao buscar produto:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchProduct = async () => {
+      try {
+        if (!isSupabaseConfigured()) {
+          // fallback to mock data if supabase is not configured
+          const mock = mockProducts.find(p => String(p.id) === String(id));
+          setProduct(mock || null);
+        } else if (supabase) {
+          const { data, error } = await supabase
+            .from('products')
+            .select(`*, category:categories(*)`)
+            .eq('id', id)
+            .single();
+          if (error) throw error;
+          setProduct(data);
+        } else {
+          setProduct(null);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar produto:', error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const fetchReviews = async () => {
     if (!isSupabaseConfigured()) {
@@ -61,6 +53,10 @@ export const ProductPage: React.FC = () => {
     }
 
     try {
+      if (!supabase) {
+        setReviews([]);
+        return;
+      }
       const { data, error } = await supabase
         .from('reviews')
         .select('*')
