@@ -213,21 +213,18 @@ export const Home: React.FC = () => {
               </div>
               <div
                 id="products-carousel"
-                className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+                className="grid grid-flow-col auto-cols-[minmax(270px,1fr)] gap-6 overflow-x-auto pb-6 px-2 snap-x snap-mandatory scroll-smooth"
                 style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
               >
                 {filteredProducts.slice(0, 12).map((product, idx) => (
                   <div
                     key={product.id}
-                    className="relative min-w-[270px] max-w-[320px] w-full bg-white rounded-2xl shadow-md hover:shadow-lg p-2 flex flex-col items-stretch justify-between transition-transform duration-200 hover:scale-105 group snap-center"
-                    style={{ flex: '0 0 270px' }}
+                    className="relative h-full flex flex-col items-stretch justify-between group snap-center"
                   >
                     {idx < 3 && (
                       <span className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow animate-bounce z-20">NOVO</span>
                     )}
-                    <div className="flex-1 flex flex-col justify-between">
-                      <ProductCard product={product} />
-                    </div>
+                    <ProductCard product={product} />
                   </div>
                 ))}
               </div>
@@ -634,6 +631,5 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </footer>
-    </div>
   );
 }
